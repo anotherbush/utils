@@ -10,6 +10,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "publishConfig": {
+    "@anotherbush:registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna run clean && lerna clean",
@@ -20,7 +23,7 @@
     "test:clean": "rm -rf ./coverage",
     "test:coverage": "jest --coverage -w 1",
     "test": "jest -w 1",
-    "release": "lerna version patch && npm run build && lerna publish from-package --no-verify-access --contents lib"
+    "release": "lerna version patch && npm run build && lerna publish from-package --contents lib"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
