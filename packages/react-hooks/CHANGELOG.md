@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/anotherbush/utils/compare/@anotherbush/react-hooks@0.0.4...@anotherbush/react-hooks@0.0.5) (2024-07-04)
+
+
+### Bug Fixes
+
+* **react-hooks:** fixed `use-list-query` ([b00ed40](https://github.com/anotherbush/utils/commit/b00ed4023bb30552640ba6ca6f398ca370605230))
+
+
+
+
+
 ## [0.0.4](https://github.com/anotherbush/utils/compare/@anotherbush/react-hooks@0.0.3...@anotherbush/react-hooks@0.0.4) (2024-07-04)
 
 
