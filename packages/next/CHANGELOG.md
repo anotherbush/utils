@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.3](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.2...@anotherbush/next@0.0.3) (2024-07-04)
+
+
+### Bug Fixes
+
+* **next:** fixed `user-server-mutation` ([954205d](https://github.com/anotherbush/utils/commit/954205d7f9268666bc5b9e969d472edcb5bfea0c))
+
+
+
+
+
 ## 0.0.2 (2024-07-04)
 
 
