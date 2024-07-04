@@ -1,0 +1,43 @@
+{
+  "name": "@anotherbush/next",
+  "version": "0.0.1",
+  "description": "NextJS utils",
+  "keywords": [
+    "react",
+    "next",
+    "next-hooks",
+    "hooks",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Tim Chen <timchen10001@gmail.com>",
+  "homepage": "https://github.com/anotherbush/utils",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anotherbush/utils.git"
+  },
+  "scripts": {
+    "clean": "npm run build:clean",
+    "build:clean": "node ../../scripts/cleanBuild.js",
+    "build": "npm run build:clean && node ../../scripts/build.js"
+  },
+  "bugs": {
+    "url": "https://github.com/anotherbush/utils/issues"
+  },
+  "peerDependencies": {
+    "next": "^14.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rxjs": "^7.5.5"
+  },
+  "dependencies": {
+    "@anotherbush/react-hooks": "^0.0.6",
+    "@anotherbush/utils": "^0.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17"
+  },
+  "gitHead": "dcc4390fc3f9d9360d4f346afdd4f6ed3d6526f3"
+}

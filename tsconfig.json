@@ -9,6 +9,9 @@
       "@anotherbush/utils": [
         "utils/src"
       ],
+      "@anotherbush/next": [
+        "next/src"
+      ],
     }
   },
   "references": [
