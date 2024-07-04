@@ -5,3 +5,5 @@ export * from './use-mutation';
 export * from './use-query';
 export * from './use-observable';
 export * from './typings';
+export * from './use-list-query';
+export * from './use-compress-image-mutation';
