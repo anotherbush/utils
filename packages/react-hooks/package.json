@@ -1,0 +1,41 @@
+{
+  "name": "@anotherbush/react-hooks",
+  "version": "0.0.1",
+  "description": "React pure hooks",
+  "keywords": [
+    "react",
+    "react-hooks",
+    "hooks",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Tim Chen <timchen10001@gmail.com>",
+  "homepage": "https://github.com/anotherbush/utils",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anotherbush/utils.git"
+  },
+  "scripts": {
+    "clean": "npm run build:clean",
+    "build:clean": "node ../../scripts/cleanBuild.js",
+    "build": "npm run build:clean && node ../../scripts/build.js"
+  },
+  "bugs": {
+    "url": "https://github.com/anotherbush/utils/issues"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "rxjs": "^7.5.5"
+  },
+  "dependencies": {
+    "@anotherbush/utils": "^0.0.1",
+    "rxjs": "^7.5.5"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.6",
+    "@types/react": "^18.2.0",
+    "react": "^18.2.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@anotherbush/utils",
+  "version": "0.0.1",
+  "description": "Utils",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "js",
+    "ts"
+  ],
+  "author": "Tim Chen <timchen10001@gmail.com>",
+  "homepage": "https://github.com/anotherbush/utils",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anotherbush/utils.git"
+  },
+  "scripts": {
+    "clean": "npm run build:clean",
+    "build:clean": "node ../../scripts/cleanBuild.js",
+    "build": "npm run build:clean && node ../../scripts/build.js"
+  },
+  "bugs": {
+    "url": "https://github.com/anotherbush/utils/issues"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.6"
+  }
+}

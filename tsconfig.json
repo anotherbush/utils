@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./packages",
+    "paths": {
+      "@anotherbush/react-hooks": [
+        "react-hooks/src"
+      ],
+      "@anotherbush/utils": [
+        "utils/src"
+      ],
+    }
+  },
+  "references": [
+    {
+      "path": "./tsconfig.dev.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}
