@@ -21,7 +21,7 @@ export interface ListRq {
 
 interface _UseListQueryParams<
   Variables,
-  Response extends HookResponse<unknown[] | null | undefined>
+  Response extends Partial<HookResponse<unknown[] | null>>
 > {
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;
   listRq: ListRq;
@@ -42,12 +42,12 @@ interface _UseListQueryParams<
 
 export type UseListQueryParams<
   Variables,
-  Response extends HookResponse<unknown[] | null | undefined>
+  Response extends Partial<HookResponse<unknown[] | null>>
 > = Omit<_UseListQueryParams<Variables, Response>, 'request' | 'name'>;
 
 export function useListQuery<
   Variables,
-  Response extends HookResponse<unknown[] | null | undefined>,
+  Response extends Partial<HookResponse<unknown[] | null>>,
   Err extends Error = Error
 >({
   forceLoadingAsFetching = false,
