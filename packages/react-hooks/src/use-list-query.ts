@@ -1,3 +1,4 @@
+import { stringifyId } from '@anotherbush/utils';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   catchError,
@@ -10,8 +11,8 @@ import {
   tap,
   timer,
 } from 'rxjs';
-import { useCache } from './use-cache';
 import { HookResponse } from './typings';
+import { useCache } from './use-cache';
 
 export interface ListRq {
   page: number;
@@ -20,7 +21,7 @@ export interface ListRq {
 
 interface _UseListQueryParams<
   Variables,
-  Response extends HookResponse<unknown[]>,
+  Response extends HookResponse<unknown[] | null | undefined>
 > {
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;
   listRq: ListRq;
@@ -28,7 +29,7 @@ interface _UseListQueryParams<
   variables?: Variables;
   request(
     listRq: ListRq,
-    variables?: Variables,
+    variables?: Variables
   ): Promise<HookResponse<Response>>;
   skip?: boolean;
   mode?: 'cache' | 'no-cache';
@@ -41,13 +42,13 @@ interface _UseListQueryParams<
 
 export type UseListQueryParams<
   Variables,
-  Response extends HookResponse<unknown[]>,
+  Response extends HookResponse<unknown[] | null | undefined>
 > = Omit<_UseListQueryParams<Variables, Response>, 'request' | 'name'>;
 
 export function useListQuery<
   Variables,
-  Response extends HookResponse<unknown[]>,
-  Err extends Error = Error,
+  Response extends HookResponse<unknown[] | null | undefined>,
+  Err extends Error = Error
 >({
   forceLoadingAsFetching = false,
   listRq,
@@ -63,8 +64,8 @@ export function useListQuery<
   errorResolver,
 }: _UseListQueryParams<Variables, Response>) {
   const refreshKey = useMemo(
-    () => `${name}:${JSON.stringify(variables)}`,
-    [variables, name],
+    () => `${name}:${stringifyId(variables)}`,
+    [variables, name]
   );
   const init = useRef(false);
   const prevRefreshKey = useRef<string>(refreshKey);
@@ -93,11 +94,11 @@ export function useListQuery<
             setError(error);
             throw ex;
           }),
-          finalize(() => setLoading(false)),
-        ),
+          finalize(() => setLoading(false))
+        )
       );
     },
-    [listRq, refreshKey, _retry, errorResolver],
+    [listRq, refreshKey, _retry, errorResolver]
   );
 
   const fetchMore = useCallback(
@@ -127,11 +128,11 @@ export function useListQuery<
             setError(error);
             throw ex;
           }),
-          finalize(() => setIsFetchingMore(false)),
-        ),
+          finalize(() => setIsFetchingMore(false))
+        )
       );
     },
-    [data, refreshKey, _retry, errorResolver],
+    [data, refreshKey, _retry, errorResolver]
   );
 
   const initialize = async () => {
