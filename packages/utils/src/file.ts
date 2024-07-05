@@ -1,28 +1,28 @@
-import { isBrowser } from './type-checker';
+import { isBrowser } from './validations';
 
 export type CompressImageOptions = {
-  log: boolean;
+  logging?: boolean;
 };
 
 export function compressImage<Src extends File | string>(
   src: Src,
   maxMb: number,
-  options?: CompressImageOptions,
+  options?: CompressImageOptions
 ): Promise<Src>;
 export function compressImage<Src extends File | string = File>(
   file: Src,
   maxMb: number,
-  options?: CompressImageOptions,
+  options?: CompressImageOptions
 ): Promise<File>;
 export function compressImage<Src extends File | string = string>(
   base64: Src,
   maxMb: number,
-  options?: CompressImageOptions,
+  options?: CompressImageOptions
 ): Promise<string>;
 export function compressImage<Src extends File | string>(
   src: Src,
   maxMb: number,
-  options?: CompressImageOptions,
+  options?: CompressImageOptions
 ): Promise<any> {
   if (!isBrowser()) {
     return Promise.resolve(typeof src === 'string' ? '' : new File([], ''));
@@ -59,14 +59,14 @@ export function compressImage<Src extends File | string>(
             canvas.toBlob(
               (blob) => r(blob || new Blob()),
               'image/jpeg',
-              quality,
+              quality
             );
           });
         };
 
         const compressUntilSizeLessThan = async (
           quality: number,
-          targetSize: number,
+          targetSize: number
         ): Promise<Blob> => {
           return compressImageAsync(quality).then((blob) => {
             if (blob.size <= targetSize || quality <= 0.1) {
@@ -79,13 +79,13 @@ export function compressImage<Src extends File | string>(
         };
 
         compressUntilSizeLessThan(0.7, maxMb * 1024 * 1024).then((blob) => {
-          if (options?.log) {
+          if (options?.logging) {
             const resizedFile = new File([blob], 'temp', {
               type: 'image/jpeg',
               lastModified: Date.now(),
             });
             console.log(
-              `Resized image size: ${(resizedFile.size / 1024).toFixed(2)} KB`,
+              `Resized image size: ${(resizedFile.size / 1024).toFixed(2)} KB`
             );
           }
 
@@ -93,7 +93,7 @@ export function compressImage<Src extends File | string>(
           afterCompressReader.onloadend = () => {
             const base64 = afterCompressReader.result as string;
             base64 ? resolve(base64) : reject(afterCompressReader.error);
-            if (options?.log) {
+            if (options?.logging) {
               console.log('壓縮後的base64', base64);
             }
           };
@@ -116,13 +116,13 @@ export function compressImage<Src extends File | string>(
           base64ToFile(compressedBase64, src.name, {
             type: src.type,
             lastModified: Date.now(),
-          }),
+          })
         )
         .then((compressedFile) => resolve(compressedFile))
         .catch(reject);
     };
     reader.onerror = () => {
-      if (options?.log) console.log('Error: ', reader.error);
+      if (options?.logging) console.log('Error: ', reader.error);
       reject(reader.error);
     };
     reader.readAsDataURL(src);
@@ -138,7 +138,7 @@ export interface FileOptions {
 export async function base64ToFile(
   base64String: string,
   filename: string,
-  options?: FileOptions,
+  options?: FileOptions
 ) {
   return fetch(base64String, {})
     .then((res) => res.blob())
@@ -146,7 +146,7 @@ export async function base64ToFile(
 }
 
 export function fileListToFiles<Input extends FileList | File>(
-  fileList: Input,
+  fileList: Input
 ): File[] {
   return Array.prototype.slice.call<FileList | File, [], File[]>(fileList);
 }
