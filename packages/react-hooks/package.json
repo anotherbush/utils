@@ -1,6 +1,6 @@
 {
   "name": "@anotherbush/react-hooks",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "React pure hooks",
   "keywords": [
     "react",
@@ -30,7 +30,7 @@
     "rxjs": "^7.5.5"
   },
   "dependencies": {
-    "@anotherbush/utils": "^0.0.3",
+    "@anotherbush/utils": "^0.0.4",
     "rxjs": "^7.5.5"
   },
   "devDependencies": {
