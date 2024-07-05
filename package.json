@@ -23,6 +23,7 @@
     "test:clean": "rm -rf ./coverage",
     "test:coverage": "jest --coverage -w 1",
     "test": "jest -w 1",
+    "prepare": "husky install",
     "release": "lerna version patch && npm run build && lerna publish from-package --contents lib"
   },
   "devDependencies": {
