@@ -2,7 +2,7 @@
 
 ## Available Tools
 
-### React-Hooks
+### React
 
 ### Utils
 
