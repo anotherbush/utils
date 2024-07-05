@@ -6,6 +6,9 @@
       "@anotherbush/react-hooks": [
         "react-hooks/src"
       ],
+      "@anotherbush/react": [
+        "react/src"
+      ],
       "@anotherbush/utils": [
         "utils/src"
       ],

@@ -1,11 +1,10 @@
 {
-  "name": "@anotherbush/next",
-  "version": "0.0.3",
-  "description": "NextJS utils",
+  "name": "@anotherbush/react",
+  "version": "0.0.1",
+  "description": "React utils",
   "keywords": [
     "react",
-    "next",
-    "next-hooks",
+    "react-hooks",
     "hooks",
     "javascript",
     "typescript"
@@ -26,14 +25,16 @@
     "url": "https://github.com/anotherbush/utils/issues"
   },
   "peerDependencies": {
-    "next": "^14.0.3",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "rxjs": "^7.5.5"
   },
+  "dependencies": {
+    "@anotherbush/utils": "^0.0.3"
+  },
   "devDependencies": {
-    "@types/react": "^18.2.39",
-    "@types/react-dom": "^18.2.17"
+    "@types/lodash": "^4.17.6",
+    "@types/react": "^18.2.0"
   },
   "gitHead": "dcc4390fc3f9d9360d4f346afdd4f6ed3d6526f3"
 }

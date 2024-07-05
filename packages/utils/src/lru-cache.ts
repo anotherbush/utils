@@ -52,7 +52,7 @@ export class LRUCache<T> {
     const nextCapacity = Math.max(0, capacity);
 
     /**
-     * If the next capacity is smaller thant before
+     * If the next capacity is smaller than before,
      * Truncate the LRU nodes until the size == nextCapacity
      */
     while (this.size > nextCapacity) {
