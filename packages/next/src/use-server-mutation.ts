@@ -40,7 +40,6 @@ export function useServerMutation<Variables, Response>({
             onComplete?.(res);
             success(res) ? resolve(res) : reject(res);
           }),
-          /** @todo handle error exception. */
           finalize(() => setLoading(false))
         )
         .subscribe();

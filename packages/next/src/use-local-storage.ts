@@ -1,3 +1,4 @@
+import { UseLocalStorage } from '@anotherbush/react';
 import {
   getLocalStorageItem,
   isBrowser,
@@ -7,12 +8,6 @@ import {
 } from '@anotherbush/utils';
 import { useEffect, useState } from 'react';
 import { filter, tap } from 'rxjs';
-
-export type UseLocalStorage<T> = {
-  data: T;
-  set: <TT extends NonNullable<T>>(next: TT) => void;
-  remove: () => void;
-};
 
 export function useLocalStorage<T>(
   key: string,
@@ -27,7 +22,7 @@ export function useLocalStorage<T>(
   key: string,
   fallback?: T
 ): UseLocalStorage<T | null> {
-  const [data, setData] = useState<T | null>(null);
+  const [data, setData] = useState<T | null>(fallback ?? null);
 
   useEffect(() => {
     setData(getLocalStorageItem<T>(key, fallback));
@@ -35,7 +30,7 @@ export function useLocalStorage<T>(
       .pipe(filter(isBrowser), tap(setData))
       .subscribe();
     return () => sub.unsubscribe();
-  }, [key, fallback]);
+  }, [key]);
 
   const set = <TT extends T>(next: TT) => setLocalStorageItem(key, next);
 
