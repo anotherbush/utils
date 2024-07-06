@@ -32,7 +32,7 @@
     "rxjs": "^7.5.5"
   },
   "dependencies": {
-    "rxjs": "^7.5.5"
+    "@anotherbush/utils": "^0.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.39",
