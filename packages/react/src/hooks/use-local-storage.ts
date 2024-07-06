@@ -1,11 +1,12 @@
 import {
   getLocalStorageItem,
+  isBrowser,
   removeLocalStorageItem,
   setLocalStorageItem,
   watchLocalStorageItem,
 } from '@anotherbush/utils';
 import { useEffect, useState } from 'react';
-import { tap } from 'rxjs';
+import { filter, tap } from 'rxjs';
 
 export type UseLocalStorage<T> = {
   data: T;
@@ -27,11 +28,11 @@ export function useLocalStorage<T>(
   fallback?: T
 ): UseLocalStorage<T | null> {
   const [data, setData] = useState<T | null>(() =>
-    getLocalStorageItem<T>(key, fallback)
+    isBrowser() ? getLocalStorageItem<T>(key, fallback) : null
   );
   useEffect(() => {
     const sub = watchLocalStorageItem<T>(key, fallback)
-      .pipe(tap(setData))
+      .pipe(filter(isBrowser), tap(setData))
       .subscribe();
     return () => sub.unsubscribe();
   }, [key, fallback]);
