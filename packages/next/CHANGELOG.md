@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.4...@anotherbush/next@0.0.5) (2024-07-06)
+
+
+### Features
+
+* **next:** add `use-local-storage` ([39ba59e](https://github.com/anotherbush/utils/commit/39ba59e714cf488d15bdece757df4a95fa6dceba))
+
+
+
+
+
 ## [0.0.4](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.3...@anotherbush/next@0.0.4) (2024-07-05)
 
 **Note:** Version bump only for package @anotherbush/next
