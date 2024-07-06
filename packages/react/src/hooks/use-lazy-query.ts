@@ -6,7 +6,7 @@ type _UseLazyQueryParams<Variables, Response> = {
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;
   onComplete?(response: Response): void;
   onError?(ex: Error): void;
-  request(variables?: Variables): Promise<HookResponse<Response>>;
+  request(variables: Variables): Promise<HookResponse<Response>>;
   skip?: boolean;
 };
 
@@ -31,10 +31,10 @@ export function useLazyQuery<Variables, Response, Err extends Error = Error>({
       setError(null);
       setLoading(true);
       return new Promise((resolve, reject) => {
-        from(request(rq))
+        from(request(rq as Variables))
           .pipe(
             map((res) => res?.data),
-            finalize(() => setLoading(false)),
+            finalize(() => setLoading(false))
           )
           .subscribe({
             next: (nextData) => {
@@ -53,7 +53,7 @@ export function useLazyQuery<Variables, Response, Err extends Error = Error>({
           });
       });
     },
-    [request, onComplete, onError],
+    [request, onComplete, onError]
   );
 
   return [query, { data, loading, error, refetch: query } as const] as const;

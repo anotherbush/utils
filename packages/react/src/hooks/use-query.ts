@@ -22,7 +22,7 @@ interface _UseQueryParams<Variables, Response> {
   name: string;
   onComplete?(response: Response): void;
   onError?(ex: Error): void;
-  request(variables?: Variables): Promise<HookResponse<Response>>;
+  request(variables: Variables): Promise<HookResponse<Response>>;
   retry?: Pick<RetryConfig, 'count' | 'delay'>;
   skip?: boolean;
   variables?: Variables;
@@ -48,7 +48,7 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
 }: _UseQueryParams<Variables, Response>) {
   const refreshKey = useMemo(
     () => `${name}:${stringifyId(variables)}`,
-    [variables, name],
+    [variables, name]
   );
   const init = useRef(false);
   const prevRefreshKey = useRef<string>(refreshKey);
@@ -61,7 +61,7 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
       setError(null);
       if (_loading) setLoading(true);
       return lastValueFrom(
-        from(request(variables)).pipe(
+        from(request(variables as Variables)).pipe(
           map((res) => res?.data),
           tap((nextData) => {
             onComplete?.(nextData);
@@ -76,11 +76,11 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
             setError(error);
             throw ex;
           }),
-          finalize(() => setLoading(false)),
-        ),
+          finalize(() => setLoading(false))
+        )
       );
     },
-    [refreshKey, _retry, errorResolver],
+    [refreshKey, _retry, errorResolver]
   );
 
   const initialize = async () => {

@@ -29,7 +29,7 @@ interface _UseListQueryParams<
   variables?: Variables;
   request(
     listRq: ListRq,
-    variables?: Variables
+    variables: Variables
   ): Promise<HookResponse<Response>>;
   skip?: boolean;
   mode?: 'cache' | 'no-cache';
@@ -79,7 +79,7 @@ export function useListQuery<
       setError(null);
       if (_loading) setLoading(true);
       return lastValueFrom(
-        from(request(listRq, variables)).pipe(
+        from(request(listRq, variables as Variables)).pipe(
           map((res) => res?.data),
           tap((nextData) => {
             onComplete?.(nextData);
@@ -106,7 +106,7 @@ export function useListQuery<
       setError(null);
       setIsFetchingMore(true);
       return lastValueFrom(
-        from(request(nextListRq, variables)).pipe(
+        from(request(nextListRq, variables as Variables)).pipe(
           map((res) => res?.data),
           tap((nextData) => {
             if (Array.isArray(nextData?.data) && Array.isArray(data?.data)) {
