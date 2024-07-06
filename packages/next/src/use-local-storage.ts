@@ -1,5 +1,3 @@
-'use client';
-
 import {
   getLocalStorageItem,
   isBrowser,
