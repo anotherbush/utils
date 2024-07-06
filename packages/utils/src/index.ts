@@ -5,4 +5,5 @@ export * from './object-deep-diff';
 export * from './create-tree-select-options';
 export * from './file';
 export * from './validations';
+export * from './local-storage';
 export type * from './typings';
