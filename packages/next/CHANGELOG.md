@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.7...@anotherbush/next@0.0.8) (2024-07-06)
+
+
+### Bug Fixes
+
+* **next:** update `use-local-storage` ([b5214e6](https://github.com/anotherbush/utils/commit/b5214e6af214b1089dbdacd3a33d8d29fb57d994))
+
+
+
+
+
 ## [0.0.7](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.6...@anotherbush/next@0.0.7) (2024-07-06)
 
 
