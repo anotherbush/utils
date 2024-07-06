@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.6...@anotherbush/next@0.0.7) (2024-07-06)
+
+
+### Bug Fixes
+
+* **next:** fixed dependencies ([7f46035](https://github.com/anotherbush/utils/commit/7f460353220e206e4286a38ca9446ed96a6b24ae))
+
+
+
+
+
 ## [0.0.6](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.5...@anotherbush/next@0.0.6) (2024-07-06)
 
 
