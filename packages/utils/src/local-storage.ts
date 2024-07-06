@@ -1,4 +1,3 @@
-import { snakeCase, upperCase } from 'lodash';
 import {
   Observable,
   Subject,
@@ -14,8 +13,7 @@ const emitter$ = () => {
   return _emitter$;
 };
 
-const getLocalStorageKey = (key: string) =>
-  `__${upperCase(snakeCase(key.trim()))}__`;
+const getLocalStorageKey = (key: string) => `__${key}__`;
 
 export function localStorage(): Storage | null {
   return typeof window !== 'undefined' ? window?.localStorage : null;
