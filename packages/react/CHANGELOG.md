@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.4...@anotherbush/react@0.0.5) (2024-07-06)
+
+
+### Features
+
+* **react:** add `use-local-storage` hook ([9c981a0](https://github.com/anotherbush/utils/commit/9c981a0dbf90ae8f19fa48a51a7b55c84ff1173d))
+
+
+
+
+
 ## [0.0.4](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.3...@anotherbush/react@0.0.4) (2024-07-06)
 
 

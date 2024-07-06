@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.5...@anotherbush/utils@0.0.6) (2024-07-06)
+
+
+### Features
+
+* **utils:** add `local-storage` wrapper ([cde0cf1](https://github.com/anotherbush/utils/commit/cde0cf1e8461d8952a6328a229256f5288cc4b27))
+
+
+
+
+
 ## [0.0.5](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.4...@anotherbush/utils@0.0.5) (2024-07-05)
 
 
