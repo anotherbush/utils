@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.6...@anotherbush/utils@0.0.7) (2024-07-06)
+
+
+### Bug Fixes
+
+* **utils:** fixed `storageKey` logic ([76e0b21](https://github.com/anotherbush/utils/commit/76e0b21a3cad94abd91f82961babe6cdc46f7a82))
+
+
+
+
+
 ## [0.0.6](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.5...@anotherbush/utils@0.0.6) (2024-07-06)
 
 
