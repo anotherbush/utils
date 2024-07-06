@@ -28,14 +28,14 @@ export function useLocalStorage<T>(
   fallback?: T
 ): UseLocalStorage<T | null> {
   const [data, setData] = useState<T | null>(() =>
-    isBrowser() ? getLocalStorageItem<T>(key, fallback) : null
+    getLocalStorageItem<T>(key, fallback)
   );
   useEffect(() => {
     const sub = watchLocalStorageItem<T>(key, fallback)
       .pipe(filter(isBrowser), tap(setData))
       .subscribe();
     return () => sub.unsubscribe();
-  }, [key, fallback]);
+  }, [key]);
 
   const set = <TT extends T>(next: TT) => setLocalStorageItem(key, next);
 
