@@ -6,3 +6,4 @@ export * from './use-query';
 export * from './use-observable';
 export * from './use-list-query';
 export * from './use-compress-image-mutation';
+export * from './use-local-storage';
