@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.6...@anotherbush/react@0.0.7) (2024-07-06)
+
+
+### Bug Fixes
+
+* **react:** fixed `hydration` error ([f976b8d](https://github.com/anotherbush/utils/commit/f976b8dbb32c6cc23d3ee647f25e730bbbb56f42))
+
+
+
+
+
 ## [0.0.6](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.5...@anotherbush/react@0.0.6) (2024-07-06)
 
 **Note:** Version bump only for package @anotherbush/react
