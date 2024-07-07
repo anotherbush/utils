@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.10](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.9...@anotherbush/react@0.0.10) (2024-07-07)
+
+
+### Bug Fixes
+
+* **react:** update `use-cache` ([52970a7](https://github.com/anotherbush/utils/commit/52970a7b804b84b541b60c929eb7fe44e09c688c))
+
+
+
+
+
 ## [0.0.9](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.8...@anotherbush/react@0.0.9) (2024-07-07)
 
 
