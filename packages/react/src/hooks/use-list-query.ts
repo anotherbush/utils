@@ -26,6 +26,7 @@ interface _UseListQueryParams<
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;
   listRq: ListRq;
   name: string;
+  cache?: 'LRU' | 'LFU';
   variables?: Variables;
   request(
     listRq: ListRq,
@@ -54,6 +55,7 @@ export function useListQuery<
   listRq,
   logging = false,
   mode = 'cache',
+  cache = 'LRU',
   name,
   onComplete,
   onError,
@@ -69,7 +71,7 @@ export function useListQuery<
   );
   const init = useRef(false);
   const prevRefreshKey = useRef<string>(refreshKey);
-  const [data, setData, hasCache] = useCache<Response>(refreshKey);
+  const [data, setData, hasCache] = useCache<Response>(cache, refreshKey);
   const [loading, setLoading] = useState(!skip && !data);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [error, setError] = useState<Err | null>(null);

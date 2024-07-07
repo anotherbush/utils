@@ -18,6 +18,7 @@ interface _UseQueryParams<Variables, Response> {
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;
   forceLoadingAsFetching?: boolean;
   logging?: boolean;
+  cache?: 'LRU' | 'LFU';
   mode?: 'cache' | 'no-cache';
   name: string;
   onComplete?(response: Response): void;
@@ -38,6 +39,7 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
   forceLoadingAsFetching = false,
   logging = false,
   mode = 'cache',
+  cache = 'LRU',
   name,
   onComplete,
   onError,
@@ -52,7 +54,7 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
   );
   const init = useRef(false);
   const prevRefreshKey = useRef<string>(refreshKey);
-  const [data, setData, hasCache] = useCache<Response>(refreshKey);
+  const [data, setData, hasCache] = useCache<Response>(cache, refreshKey);
   const [loading, setLoading] = useState(!skip && !data);
   const [error, setError] = useState<Err | null>(null);
 
