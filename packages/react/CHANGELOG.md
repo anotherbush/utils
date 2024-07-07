@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.9](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.8...@anotherbush/react@0.0.9) (2024-07-07)
+
+
+### Features
+
+* **react:** separate `useCache` into `useLRUCache` and `useLFUCache` ([7f9de35](https://github.com/anotherbush/utils/commit/7f9de351182c932460436c7e7943ed296cff3c06))
+
+
+
+
+
 ## [0.0.8](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.7...@anotherbush/react@0.0.8) (2024-07-06)
 
 

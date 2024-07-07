@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.7...@anotherbush/utils@0.0.8) (2024-07-07)
+
+
+### Features
+
+* **utils:** implements `LFUCache` ([5d4716f](https://github.com/anotherbush/utils/commit/5d4716f029a7c363c768a6e862b6ced365ab0f7a))
+
+
+
+
+
 ## [0.0.7](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.6...@anotherbush/utils@0.0.7) (2024-07-06)
 
 
