@@ -1,6 +1,8 @@
-export class LRUCache<T> {
-  private readonly cache = new DoubleLinkedList<T>();
-  private readonly keyToNode = new Map<string, ListNode<T>>();
+import { Cache } from './typings';
+
+export class LRUCache<Key = any, Val = any> implements Cache<Key, Val> {
+  private readonly cache = new DoubleLinkedList<Val>();
+  private readonly keyToNode = new Map<Key, ListNode<Val>>();
   private _capacity: number;
 
   constructor(capacity: number) {
@@ -15,33 +17,33 @@ export class LRUCache<T> {
     return this._capacity;
   }
 
-  public has(key: string) {
+  public has(key: Key) {
     return this.keyToNode.has(key);
   }
 
-  public get(key: string) {
+  public get(key: Key) {
     if (!this.keyToNode.has(key)) return undefined;
-    this._makeNodeRecentlyUse(key);
+    this._makeNodeRecentlyUsed(key);
     return this.keyToNode.get(key)?.val;
   }
 
-  public set(key: string, val: T) {
+  public set(key: Key, val: Val) {
     if (this.keyToNode.has(key)) {
-      this._deleteKey(key);
-      this._addRecentlyUseNode(key, val);
+      this._deleteNodeByKey(key);
+      this._addRecentlyUsedNode(key, val);
       return;
     }
 
     if (this.cache.size() === this.capacity) {
-      this._removeLeastRecentlyUseNode();
+      this._removeLeastRecentlyUsedNode();
     }
 
-    this._addRecentlyUseNode(key, val);
+    this._addRecentlyUsedNode(key, val);
   }
 
-  public delete(key: string) {
+  public delete(key: Key) {
     if (!this.keyToNode.has(key)) return;
-    this._deleteKey(key);
+    this._deleteNodeByKey(key);
   }
 
   /**
@@ -56,7 +58,7 @@ export class LRUCache<T> {
      * Truncate the LRU nodes until the size == nextCapacity
      */
     while (this.size > nextCapacity) {
-      this._removeLeastRecentlyUseNode();
+      this._removeLeastRecentlyUsedNode();
     }
 
     this._capacity = nextCapacity;
@@ -64,7 +66,7 @@ export class LRUCache<T> {
 
   /** Private methods */
 
-  private _makeNodeRecentlyUse(key: string) {
+  private _makeNodeRecentlyUsed(key: Key) {
     const recentlyNode = this.keyToNode.get(key);
     if (recentlyNode instanceof ListNode) {
       this.cache.remove(recentlyNode);
@@ -72,13 +74,13 @@ export class LRUCache<T> {
     }
   }
 
-  private _addRecentlyUseNode(key: string, value: T) {
-    const newNode = new ListNode<T>(key, value);
+  private _addRecentlyUsedNode(key: Key, value: Val) {
+    const newNode = new ListNode<Val>(key, value);
     this.cache.pushBack(newNode);
     this.keyToNode.set(key, newNode);
   }
 
-  private _deleteKey(key: string) {
+  private _deleteNodeByKey(key: Key) {
     const del = this.keyToNode.get(key);
     if (del instanceof ListNode) {
       this.cache.remove(del);
@@ -86,7 +88,7 @@ export class LRUCache<T> {
     }
   }
 
-  private _removeLeastRecentlyUseNode() {
+  private _removeLeastRecentlyUsedNode() {
     const lruNode = this.cache.popFront();
     if (lruNode instanceof ListNode) {
       this.keyToNode.delete(lruNode.key);
@@ -95,12 +97,12 @@ export class LRUCache<T> {
 }
 
 class ListNode<T> {
-  readonly key: string;
+  readonly key: any;
   val?: T;
   prev?: ListNode<T>;
   next?: ListNode<T>;
-  constructor(key?: string, val?: T) {
-    this.key = key || '';
+  constructor(key?: any, val?: T) {
+    this.key = key ?? null;
     this.val = val;
   }
 }
