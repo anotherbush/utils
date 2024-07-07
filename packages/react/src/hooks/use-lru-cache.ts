@@ -2,11 +2,7 @@ import { LRUCache } from '@anotherbush/utils';
 import { useEffect, useState } from 'react';
 import { Subject, distinctUntilChanged, filter, map, tap } from 'rxjs';
 
-/**
- * @deprecated
- * use `useLRUCache` or `useLFUCache`
- */
-export function useCache<T>(key: string) {
+export function useLRUCache<T>(key: string) {
   const [data, _setData] = useState<T | null>(getCache<T>(key));
 
   useEffect(() => {
@@ -71,19 +67,11 @@ function watchCache$<T>(key: string) {
     );
 }
 
-/**
- * @deprecated
- * use `setLRUCacheCapacity` or `setLFUCacheCapacity`
- */
-export function setCapacity(capacity: number) {
+export function seLRUCacheCapacity(capacity: number) {
   cache().setCapacity(capacity);
 }
 
-/**
- * @deprecated
- * use `destroyLRUCache` or `destroyFUCache`
- */
-export function destroy() {
+export function destroyLRUCache() {
   _cache = null;
   _emitter$ = null;
 }

@@ -1,12 +1,8 @@
-import { LRUCache } from '@anotherbush/utils';
+import { LFUCache } from '@anotherbush/utils';
 import { useEffect, useState } from 'react';
 import { Subject, distinctUntilChanged, filter, map, tap } from 'rxjs';
 
-/**
- * @deprecated
- * use `useLRUCache` or `useLFUCache`
- */
-export function useCache<T>(key: string) {
+export function useLFUCache<T>(key: string) {
   const [data, _setData] = useState<T | null>(getCache<T>(key));
 
   useEffect(() => {
@@ -31,11 +27,11 @@ export function useCache<T>(key: string) {
 
 /** ------------------------------------------------------------ */
 
-let _cache: LRUCache<string, any> | null = null;
+let _cache: LFUCache<string, any> | null = null;
 let _emitter$: Subject<string> | null = null;
 
-function cache(capacity = 10) {
-  _cache = _cache || new LRUCache<string, any>(capacity);
+function cache(capacity = 20) {
+  _cache = _cache || new LFUCache<string, any>(capacity);
   return _cache;
 }
 function emitter$() {
@@ -71,19 +67,11 @@ function watchCache$<T>(key: string) {
     );
 }
 
-/**
- * @deprecated
- * use `setLRUCacheCapacity` or `setLFUCacheCapacity`
- */
-export function setCapacity(capacity: number) {
+export function seLFUCacheCapacity(capacity: number) {
   cache().setCapacity(capacity);
 }
 
-/**
- * @deprecated
- * use `destroyLRUCache` or `destroyFUCache`
- */
-export function destroy() {
+export function destroyLFUCache() {
   _cache = null;
   _emitter$ = null;
 }
