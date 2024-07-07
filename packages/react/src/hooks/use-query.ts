@@ -59,7 +59,7 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
   const [error, setError] = useState<Err | null>(null);
 
   const query = useCallback(
-    (_loading?: boolean): Promise<Response> => {
+    (_loading = true): Promise<Response> => {
       setError(null);
       if (_loading) setLoading(true);
       return lastValueFrom(
@@ -108,7 +108,7 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
       if (logging) console.debug('hasCache', refreshKey);
     } else if (refreshKey !== prevRefreshKey.current || mode === 'no-cache') {
       prevRefreshKey.current = refreshKey;
-      query(true);
+      query();
     }
   }, [mode, refreshKey, skip]);
 
