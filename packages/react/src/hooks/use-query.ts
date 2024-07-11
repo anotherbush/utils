@@ -100,6 +100,11 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
         mode === 'no-cache' || forceLoadingAsFetching || !hasCache(refreshKey);
       query(letLoading).then(() => (init.current = true));
     }
+    return () => {
+      if (mode === 'no-cache') {
+        setData(null);
+      }
+    };
   }, [mode, skip]);
 
   useEffect(() => {
