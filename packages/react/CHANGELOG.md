@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.12](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.11...@anotherbush/react@0.0.12) (2024-07-11)
+
+
+### Bug Fixes
+
+* **react:** use-query unmounted as mode: no-cache ([3be980c](https://github.com/anotherbush/utils/commit/3be980c4e98705dc2ff8de7ac619b0694285a786))
+
+
+
+
+
 ## [0.0.11](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.10...@anotherbush/react@0.0.11) (2024-07-07)
 
 
