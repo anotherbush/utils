@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Observable, tap } from 'rxjs';
-
-export type ValueOfObservable<ObservableLike extends Observable<unknown>> =
-  Awaited<ReturnType<ObservableLike['toPromise']>>;
+import { ValueOfObservable } from '../typings';
 
 /**
  * To use the value of the observable, and handling its life cycle.

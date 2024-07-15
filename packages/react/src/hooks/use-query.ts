@@ -1,4 +1,4 @@
-import { stringifyId } from '@anotherbush/utils';
+import { CacheVariant, stringifyId } from '@anotherbush/utils';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   catchError,
@@ -18,7 +18,7 @@ interface _UseQueryParams<Variables, Response> {
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;
   forceLoadingAsFetching?: boolean;
   logging?: boolean;
-  cache?: 'LRU' | 'LFU';
+  cache?: CacheVariant;
   mode?: 'cache' | 'no-cache';
   name: string;
   onComplete?(response: Response): void;

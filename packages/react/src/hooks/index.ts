@@ -8,3 +8,4 @@ export * from './use-compress-image-mutation';
 export * from './use-local-storage';
 export * from './use-lru-cache';
 export * from './use-lfu-cache';
+export * from './use-cache';

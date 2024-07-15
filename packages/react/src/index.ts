@@ -1,3 +1,2 @@
-export * from './typings';
 export * from './hooks';
-
+export type * from './typings';

@@ -1,24 +1,24 @@
-import { LFUCache, LRUCache } from '@anotherbush/utils';
+import { CacheVariant, LFUCache, LRUCache } from '@anotherbush/utils';
 import { useEffect, useRef, useState } from 'react';
 import { Subject, distinctUntilChanged, filter, map, tap } from 'rxjs';
 
-export function useCache<T>(cache: 'LRU' | 'LFU', key: string) {
-  const { current: cacheRef } = useRef(cache);
+export function useCache<T>(variant: CacheVariant, key: string) {
+  const { current: variantRef } = useRef(variant);
 
   const [data, _setData] = useState<T | null>(() => {
-    if (cacheRef === 'LRU') return getLRUCache<T>(key);
-    if (cacheRef === 'LFU') return getLFUCache<T>(key);
+    if (variantRef === 'LRU') return getLRUCache<T>(key);
+    if (variantRef === 'LFU') return getLFUCache<T>(key);
     return null;
   });
 
   useEffect(() => {
-    if (cacheRef === 'LRU') {
+    if (variantRef === 'LRU') {
       if (hasLRUCache(key)) {
         _setData(getLRUCache<T>(key));
       }
       const sub = watchLRUCache$<T>(key).pipe(tap(_setData)).subscribe();
       return () => sub.unsubscribe();
-    } else if (cacheRef === 'LFU') {
+    } else if (variantRef === 'LFU') {
       if (hasLFUCache(key)) {
         _setData(getLFUCache<T>(key));
       }
@@ -28,18 +28,17 @@ export function useCache<T>(cache: 'LRU' | 'LFU', key: string) {
   }, [key]);
 
   const hasData = (dataKey?: string) => {
-    if (cacheRef === 'LRU') return hasLRUCache(dataKey || key);
-    if (cacheRef === 'LFU') return hasLFUCache(dataKey || key);
+    if (variantRef === 'LRU') return hasLRUCache(dataKey || key);
+    if (variantRef === 'LFU') return hasLFUCache(dataKey || key);
     return false;
   };
 
   const setData = (value: T | null) => {
-    if (value === null && cacheRef === 'LRU') deleteLRUCache(key);
-    else if (value === null && cacheRef === 'LFU') deleteLFUCache(key);
-    else if (value !== null && cacheRef === 'LRU') setLRUCache(key, value);
-    else if (value !== null && cacheRef === 'LFU') setLFUCache(key, value);
+    if (value === null && variantRef === 'LRU') deleteLRUCache(key);
+    else if (value === null && variantRef === 'LFU') deleteLFUCache(key);
+    else if (value !== null && variantRef === 'LRU') setLRUCache(key, value);
+    else if (value !== null && variantRef === 'LFU') setLFUCache(key, value);
   };
-
   return [data, setData, hasData] as const;
 }
 
@@ -125,12 +124,17 @@ function watchLFUCache$<T>(key: string) {
     );
 }
 
-export function setLRUCapacity(capacity: number) {
-  lruCache().setCapacity(capacity);
-}
-
-export function setLFUCapacity(capacity: number) {
-  lfuCache().setCapacity(capacity);
+export function setCacheCapacity(variant: CacheVariant, capacity: number) {
+  switch (variant) {
+    case 'LRU': {
+      lruCache().setCapacity(capacity);
+      break;
+    }
+    case 'LFU': {
+      lfuCache().setCapacity(capacity);
+      break;
+    }
+  }
 }
 
 export function destroyCache() {
