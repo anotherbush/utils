@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.13](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.12...@anotherbush/next@0.0.13) (2024-07-15)
+
+
+### Features
+
+* **next:** add `use-hydrated` hook ([bdb1598](https://github.com/anotherbush/utils/commit/bdb1598cbac4bab9bade21db260d8b9f1f1db208))
+
+
+
+
+
 ## [0.0.12](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.11...@anotherbush/next@0.0.12) (2024-07-11)
 
 **Note:** Version bump only for package @anotherbush/next

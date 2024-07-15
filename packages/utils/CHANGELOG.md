@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.9](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.8...@anotherbush/utils@0.0.9) (2024-07-15)
+
+
+### Features
+
+* **utils:** update `typings` ([77cec11](https://github.com/anotherbush/utils/commit/77cec1197b10a141373ad6b3ff25eceb6f55782c))
+
+
+
+
+
 ## [0.0.8](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.7...@anotherbush/utils@0.0.8) (2024-07-07)
 
 
