@@ -1,5 +1,7 @@
 export type ObjectType = { [key: string]: any };
 
+export type CacheVariant = 'LRU' | 'LFU';
+
 export interface Cache<Key = any, Val = any> {
   size: number;
   capacity: number;
