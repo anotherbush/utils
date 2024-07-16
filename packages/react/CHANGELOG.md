@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.14](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.13...@anotherbush/react@0.0.14) (2024-07-16)
+
+
+### Bug Fixes
+
+* **react:** fixed `use-list-query` unmounted logic ([cb5b7ea](https://github.com/anotherbush/utils/commit/cb5b7ea164bb5c351b3a0f8271454237ce9a106b))
+
+
+
+
+
 ## [0.0.13](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.12...@anotherbush/react@0.0.13) (2024-07-15)
 
 **Note:** Version bump only for package @anotherbush/react
