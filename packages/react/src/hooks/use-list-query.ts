@@ -164,6 +164,12 @@ export function useListQuery<
     }
   }, [mode, refreshKey, skip]);
 
+  useEffect(() => {
+    if (mode === 'no-cache') {
+      return () => setData(null);
+    }
+  }, [mode]);
+
   return {
     data,
     loading,
