@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.15](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.14...@anotherbush/react@0.0.15) (2024-07-18)
+
+
+### Bug Fixes
+
+* **react:** fixed `abort-quering` just use last value issues ([cec6086](https://github.com/anotherbush/utils/commit/cec608645d05fe66f0ced0e48309b59b7a83939f))
+
+
+
+
+
 ## [0.0.14](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.13...@anotherbush/react@0.0.14) (2024-07-16)
 
 
