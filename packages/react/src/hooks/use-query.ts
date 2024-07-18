@@ -1,4 +1,3 @@
-import { HookResponse, useCache } from '@anotherbush/react';
 import { CacheVariant, stringifyId } from '@anotherbush/utils';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -12,6 +11,8 @@ import {
   tap,
   timer,
 } from 'rxjs';
+import { HookResponse } from '../typings';
+import { useCache } from './use-cache';
 
 interface _UseQueryParams<Variables, Response> {
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;
