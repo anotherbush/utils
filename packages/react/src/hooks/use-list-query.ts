@@ -84,19 +84,25 @@ export function useListQuery<
         from(request(listRq, variables as Variables)).pipe(
           map((res) => res?.data),
           tap((nextData) => {
+            if (prevRefreshKey.current !== refreshKey) return;
             onComplete?.(nextData);
             setData(nextData);
           }),
           retry(_retry),
           catchError((ex) => {
-            const error = errorResolver
-              ? errorResolver(ex)
-              : ex?.response?.data;
-            onError?.(ex);
-            setError(error);
+            if (prevRefreshKey.current === refreshKey) {
+              const error = errorResolver
+                ? errorResolver(ex)
+                : ex?.response?.data;
+              onError?.(ex);
+              setError(error);
+            }
             throw ex;
           }),
-          finalize(() => setLoading(false))
+          finalize(() => {
+            if (prevRefreshKey.current !== refreshKey) return;
+            setLoading(false);
+          })
         )
       );
     },
@@ -111,6 +117,7 @@ export function useListQuery<
         from(request(nextListRq, variables as Variables)).pipe(
           map((res) => res?.data),
           tap((nextData) => {
+            if (prevRefreshKey.current !== refreshKey) return;
             if (Array.isArray(nextData?.data) && Array.isArray(data?.data)) {
               const nextDataData = [...data.data, ...nextData.data];
               // console.log(data?.data);
@@ -123,11 +130,13 @@ export function useListQuery<
             setData(nextData);
           }),
           catchError((ex) => {
-            const error = errorResolver
-              ? errorResolver(ex)
-              : ex?.response?.data;
-            onError?.(ex);
-            setError(error);
+            if (prevRefreshKey.current === refreshKey) {
+              const error = errorResolver
+                ? errorResolver(ex)
+                : ex?.response?.data;
+              onError?.(ex);
+              setError(error);
+            }
             throw ex;
           }),
           finalize(() => setIsFetchingMore(false))

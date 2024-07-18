@@ -1,3 +1,4 @@
+import { HookResponse, useCache } from '@anotherbush/react';
 import { CacheVariant, stringifyId } from '@anotherbush/utils';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -11,8 +12,6 @@ import {
   tap,
   timer,
 } from 'rxjs';
-import { HookResponse } from '../typings';
-import { useCache } from './use-cache';
 
 interface _UseQueryParams<Variables, Response> {
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;
@@ -66,19 +65,25 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
         from(request(variables as Variables)).pipe(
           map((res) => res?.data),
           tap((nextData) => {
+            if (prevRefreshKey.current !== refreshKey) return;
             onComplete?.(nextData);
             setData(nextData);
           }),
           retry(_retry),
           catchError((ex) => {
-            const error = errorResolver
-              ? errorResolver(ex)
-              : ex?.response?.data;
-            onError?.(ex);
-            setError(error);
+            if (prevRefreshKey.current === refreshKey) {
+              const error = errorResolver
+                ? errorResolver(ex)
+                : ex?.response?.data;
+              onError?.(ex);
+              setError(error);
+            }
             throw ex;
           }),
-          finalize(() => setLoading(false))
+          finalize(() => {
+            if (prevRefreshKey.current !== refreshKey) return;
+            setLoading(false);
+          })
         )
       );
     },
