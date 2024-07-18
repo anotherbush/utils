@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.17](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.16...@anotherbush/react@0.0.17) (2024-07-18)
+
+
+### Bug Fixes
+
+* **react:** fixed import reference ([f03cc6d](https://github.com/anotherbush/utils/commit/f03cc6da3fc300decf7f7422bd98ebd03bca7500))
+
+
+
+
+
 ## [0.0.16](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.15...@anotherbush/react@0.0.16) (2024-07-18)
 
 **Note:** Version bump only for package @anotherbush/react
