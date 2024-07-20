@@ -9,3 +9,4 @@ export * from './use-local-storage';
 export * from './use-lru-cache';
 export * from './use-lfu-cache';
 export * from './use-cache';
+export * from './use-value-ref';
