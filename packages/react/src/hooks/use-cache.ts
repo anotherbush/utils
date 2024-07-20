@@ -1,30 +1,40 @@
 import { CacheVariant, LFUCache, LRUCache } from '@anotherbush/utils';
 import { useEffect, useRef, useState } from 'react';
 import { Subject, distinctUntilChanged, filter, map, tap } from 'rxjs';
+import { useValueRef } from './use-value-ref';
 
-export function useCache<T>(variant: CacheVariant, key: string) {
+export function useCache<T>(
+  variant: CacheVariant,
+  key: string,
+  initialValue?: T | null
+) {
   const { current: variantRef } = useRef(variant);
+  const initialValueRef = useValueRef(initialValue);
 
   const [data, _setData] = useState<T | null>(() => {
+    if (initialValue !== undefined) return initialValue;
     if (variantRef === 'LRU') return getLRUCache<T>(key);
     if (variantRef === 'LFU') return getLFUCache<T>(key);
     return null;
   });
 
+  /** Handle initial value (includes updating by key change) */
   useEffect(() => {
-    if (variantRef === 'LRU') {
-      if (hasLRUCache(key)) {
-        _setData(getLRUCache<T>(key));
-      }
-      const sub = watchLRUCache$<T>(key).pipe(tap(_setData)).subscribe();
-      return () => sub.unsubscribe();
-    } else if (variantRef === 'LFU') {
-      if (hasLFUCache(key)) {
-        _setData(getLFUCache<T>(key));
-      }
-      const sub = watchLFUCache$<T>(key).pipe(tap(_setData)).subscribe();
-      return () => sub.unsubscribe();
+    if (initialValueRef.current !== undefined) {
+      _setData(initialValueRef.current);
+    } else if (variantRef === 'LRU' && hasLRUCache(key)) {
+      _setData(getLRUCache<T>(key));
+    } else if (variantRef === 'LFU' && hasLFUCache(key)) {
+      _setData(getLFUCache<T>(key));
     }
+  }, [key]);
+
+  /** Handle change events */
+  useEffect(() => {
+    const watcher$ =
+      variantRef === 'LFU' ? watchLFUCache$<T>(key) : watchLRUCache$<T>(key);
+    const sub = watcher$.pipe(tap(_setData)).subscribe();
+    return () => sub.unsubscribe();
   }, [key]);
 
   const hasData = (dataKey?: string) => {

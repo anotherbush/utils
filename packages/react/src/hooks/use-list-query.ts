@@ -71,7 +71,11 @@ export function useListQuery<
   );
   const init = useRef(false);
   const prevRefreshKey = useRef<string>(refreshKey);
-  const [data, setData, hasCache] = useCache<Response>(cache, refreshKey);
+  const [data, setData, hasCache] = useCache<Response>(
+    cache,
+    refreshKey,
+    mode === 'no-cache' ? null : undefined
+  );
   const [loading, setLoading] = useState(!skip && !data);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [error, setError] = useState<Err | null>(null);

@@ -54,7 +54,11 @@ export function useQuery<Variables, Response, Err extends Error = Error>({
   );
   const init = useRef(false);
   const prevRefreshKey = useRef<string>(refreshKey);
-  const [data, setData, hasCache] = useCache<Response>(cache, refreshKey);
+  const [data, setData, hasCache] = useCache<Response>(
+    cache,
+    refreshKey,
+    mode === 'no-cache' ? null : undefined
+  );
   const [loading, setLoading] = useState(!skip && !data);
   const [error, setError] = useState<Err | null>(null);
 

@@ -1,19 +1,24 @@
 import { LRUCache } from '@anotherbush/utils';
 import { useEffect, useState } from 'react';
 import { Subject, distinctUntilChanged, filter, map, tap } from 'rxjs';
+import { useValueRef } from './use-value-ref';
 
-export function useLRUCache<T>(key: string) {
-  const [data, _setData] = useState<T | null>(getCache<T>(key));
+export function useLRUCache<T>(key: string, initialValue?: T | null) {
+  const initialValueRef = useValueRef(initialValue);
+  const [data, _setData] = useState<T | null>(() =>
+    initialValue !== undefined ? initialValue : getCache<T>(key)
+  );
 
   useEffect(() => {
-    if (hasCache(key)) {
+    if (initialValueRef.current !== undefined) {
+      _setData(initialValueRef.current);
+    } else if (hasCache(key)) {
       _setData(getCache<T>(key));
     }
+  }, [key]);
 
-    const sub = watchCache$<T>(key)
-      .pipe(tap((newData) => _setData(newData)))
-      .subscribe();
-
+  useEffect(() => {
+    const sub = watchCache$<T>(key).pipe(tap(_setData)).subscribe();
     return () => sub.unsubscribe();
   }, [key]);
 
