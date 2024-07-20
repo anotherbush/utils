@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.18](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.17...@anotherbush/react@0.0.18) (2024-07-20)
+
+
+### Bug Fixes
+
+* **react:** fixed caching `initialValue` issues ([9b37b46](https://github.com/anotherbush/utils/commit/9b37b46469992c45be82a232cf6177b23f911cc4))
+
+
+### Features
+
+* **react:** add `use-value-ref` hook ([1ecf49a](https://github.com/anotherbush/utils/commit/1ecf49a868d2a3e34a56f43ac6d0cb48ec3593ca))
+
+
+
+
+
 ## [0.0.17](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.16...@anotherbush/react@0.0.17) (2024-07-18)
 
 
