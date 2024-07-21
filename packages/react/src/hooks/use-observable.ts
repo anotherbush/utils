@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Observable, tap } from 'rxjs';
+import { useEffect, useRef, useState } from 'react';
+import { BehaviorSubject, Observable, tap, timer } from 'rxjs';
 import { ValueOfObservable } from '../typings';
 
 /**
@@ -8,7 +8,11 @@ import { ValueOfObservable } from '../typings';
 export function useObservable<ObservableLike extends Observable<unknown>>(
   observableLike$: ObservableLike
 ): ValueOfObservable<ObservableLike> {
-  const [data, setData] = useState<ValueOfObservable<ObservableLike>>();
+  const [data, setData] = useState<ValueOfObservable<ObservableLike>>(
+    observableLike$ instanceof BehaviorSubject
+      ? observableLike$.value
+      : undefined
+  );
   useEffect(() => {
     const sub = observableLike$
       .pipe(
