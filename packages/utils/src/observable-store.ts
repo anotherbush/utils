@@ -8,6 +8,11 @@ import {
 } from 'rxjs';
 import { ObjectType } from './typings';
 
+export type ObservableStoreDispatchFn<
+  T extends ObjectType,
+  Key extends keyof T | undefined
+> = Key extends keyof T ? (prev: T[Key]) => T[Key] : (prev: T) => T;
+
 export class ObservableStore<T extends ObjectType> {
   private readonly _producer$: BehaviorSubject<T>;
   private readonly _consumer$: Observable<T>;
@@ -38,6 +43,10 @@ export class ObservableStore<T extends ObjectType> {
   ): void;
   public dispatch<KeyOrPathAll extends keyof T | ((prev: T) => T)>(
     key: KeyOrPathAll,
+    patch: KeyOrPathAll extends keyof T ? T[KeyOrPathAll] : never
+  ): void;
+  public dispatch<KeyOrPathAll extends keyof T | ((prev: T) => T)>(
+    key: KeyOrPathAll,
     patch: KeyOrPathAll extends keyof T
       ? (prev: T[KeyOrPathAll]) => T[KeyOrPathAll]
       : never
@@ -47,9 +56,24 @@ export class ObservableStore<T extends ObjectType> {
     KeyOrPathAll extends Key | ((prev: T) => T)
   >(
     keyOrPatchAll: KeyOrPathAll,
-    patch?: KeyOrPathAll extends Key ? (prev: T[Key]) => T[Key] : never
+    patch?: KeyOrPathAll extends Key
+      ? T[Key] | ((prev: T[Key]) => T[Key])
+      : never
   ): void {
-    if (typeof keyOrPatchAll === 'string' && typeof patch === 'function') {
+    if (typeof keyOrPatchAll === 'string' && typeof patch !== 'function') {
+      /** dispatch by key */
+      const key: string = keyOrPatchAll;
+      const prevStore = this._producer$.value;
+      const nextVal = patch;
+      const nextStore = {
+        ...prevStore,
+        [key]: nextVal,
+      };
+      this._producer$.next(nextStore);
+    } else if (
+      typeof keyOrPatchAll === 'string' &&
+      typeof patch === 'function'
+    ) {
       /** dispatch by key */
       const key: string = keyOrPatchAll;
       const prevStore = this._producer$.value;

@@ -100,4 +100,13 @@ it('ObservableStore', () => {
         optionalField: { dynamicallyPatched: ':)' },
       })
   ).toBe(true);
+
+  store
+    .watch('name')
+    .pipe(skip(1), take(1))
+    .subscribe((nextName) => {
+      expect(nextName === 'TimChen').toBe(true);
+    });
+
+  store.dispatch('name', 'TimChen');
 });
