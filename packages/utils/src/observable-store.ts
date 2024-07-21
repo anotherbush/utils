@@ -8,11 +8,6 @@ import {
 } from 'rxjs';
 import { ObjectType } from './typings';
 
-export type ObservableStoreDispatchFn<
-  T extends ObjectType,
-  Key extends keyof T | undefined
-> = Key extends keyof T ? (prev: T[Key]) => T[Key] : (prev: T) => T;
-
 export class ObservableStore<T extends ObjectType> {
   private readonly _producer$: BehaviorSubject<T>;
   private readonly _consumer$: Observable<T>;
