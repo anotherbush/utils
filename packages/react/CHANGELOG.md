@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.19](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.18...@anotherbush/react@0.0.19) (2024-07-21)
+
+
+### Bug Fixes
+
+* **react:** handle `ValueOfObservable` generically infer typing ([1b56091](https://github.com/anotherbush/utils/commit/1b5609199244874fe1b8840b09c2742a5811c29b))
+
+
+### Features
+
+* **react:** add `isCounting` to `use-can-resend-until` ([87a3dff](https://github.com/anotherbush/utils/commit/87a3dffdb435fb265e75eb3d3f535864c52c69dc))
+
+
+
+
+
 ## [0.0.18](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.17...@anotherbush/react@0.0.18) (2024-07-20)
 
 

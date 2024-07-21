@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.11](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.10...@anotherbush/utils@0.0.11) (2024-07-21)
+
+
+### Features
+
+* **utils:** add basic testing on `ObservableStore` ([fd5d0ab](https://github.com/anotherbush/utils/commit/fd5d0ab1cb1096862e9527bee9c1597d647cf6ce))
+* **utils:** implements `ObservableStore` ([5260ba5](https://github.com/anotherbush/utils/commit/5260ba5b3ad125690e375fa832aadff3e0a69b41))
+
+
+
+
+
 ## [0.0.10](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.9...@anotherbush/utils@0.0.10) (2024-07-18)
 
 
