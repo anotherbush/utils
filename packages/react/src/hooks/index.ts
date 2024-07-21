@@ -10,3 +10,5 @@ export * from './use-lru-cache';
 export * from './use-lfu-cache';
 export * from './use-cache';
 export * from './use-value-ref';
+export * from './use-watch-store';
+
