@@ -23,8 +23,8 @@ export class ObservableStore<T extends ObjectType> {
   }
 
   public get(): T;
-  public get<Key extends keyof T>(key?: Key): T | T[Key];
   public get<Key extends keyof T>(key: Key): T[Key];
+  public get<Key extends keyof T>(key?: Key): T | T[Key];
   public get<Key extends keyof T>(key?: Key): T | T[Key] {
     return key === undefined
       ? this._producer$.value
@@ -32,15 +32,15 @@ export class ObservableStore<T extends ObjectType> {
   }
 
   public dispatch(patchAll: (prev: T) => T): void;
+  public dispatch<Key extends keyof T>(
+    key: Key,
+    patch: (prev: T[Key]) => T[Key]
+  ): void;
   public dispatch<KeyOrPathAll extends keyof T | ((prev: T) => T)>(
     key: KeyOrPathAll,
     patch: KeyOrPathAll extends keyof T
       ? (prev: T[KeyOrPathAll]) => T[KeyOrPathAll]
       : never
-  ): void;
-  public dispatch<Key extends keyof T>(
-    key: Key,
-    patch: (prev: T[Key]) => T[Key]
   ): void;
   public dispatch<
     Key extends keyof T,
@@ -70,10 +70,10 @@ export class ObservableStore<T extends ObjectType> {
 
   /** Return a hot observable */
   public watch(): Observable<T>;
+  public watch<Key extends keyof T>(key: Key): Observable<T[Key]>;
   public watch<Key extends keyof T | undefined = undefined>(
     key?: Key
   ): Observable<any>;
-  public watch<Key extends keyof T>(key: Key): Observable<T[Key]>;
   public watch<Key extends keyof T | undefined = undefined>(
     key?: Key
   ): Observable<any> {
