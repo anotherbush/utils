@@ -20,12 +20,14 @@ export function useCanResendUntil(nextCanResendTimeStamp?: number) {
   );
   const [countdown, setCountdown] = useState(0);
   const [canResend, setCanResend] = useState(true);
+  const [isCounting, setIsCounting] = useState(false);
 
   const restart = (nextCanResendTimeStamp: number) => {
     const ms = nextCanResendTimeStamp - Date.now();
     if (ms < 0) return;
     setCountdown(Math.floor(ms));
     setCanResend(false);
+    setIsCounting(true);
     canResend$.current.next(ms);
   };
 
@@ -58,6 +60,7 @@ export function useCanResendUntil(nextCanResendTimeStamp?: number) {
     if (countdown <= 0) {
       canResend$.current.next(null);
       setCanResend(true);
+      setIsCounting(false);
     }
   }, [countdown]);
 
@@ -69,5 +72,5 @@ export function useCanResendUntil(nextCanResendTimeStamp?: number) {
     }
   }, [nextCanResendTimeStamp]);
 
-  return { countdown, canResend, restart } as const;
+  return { countdown, canResend, restart, isCounting } as const;
 }
