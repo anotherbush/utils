@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.12](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.11...@anotherbush/utils@0.0.12) (2024-07-21)
+
+
+### Bug Fixes
+
+* **utils:** correct `ObservableStore` overloads order ([19d31d7](https://github.com/anotherbush/utils/commit/19d31d7599595031e75270dfaaeb57a5bcf4f523))
+
+
+
+
+
 ## [0.0.11](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.10...@anotherbush/utils@0.0.11) (2024-07-21)
 
 

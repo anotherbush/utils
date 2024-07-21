@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.20](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.19...@anotherbush/react@0.0.20) (2024-07-21)
+
+
+### Bug Fixes
+
+* **react:** add `use-watch-store` hook ([ecdc871](https://github.com/anotherbush/utils/commit/ecdc871bb2e870b7821a5f5ff24438fb3247b244))
+
+
+
+
+
 ## [0.0.19](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.18...@anotherbush/react@0.0.19) (2024-07-21)
 
 
