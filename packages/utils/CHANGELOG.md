@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.13](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.12...@anotherbush/utils@0.0.13) (2024-07-21)
+
+
+### Features
+
+* **utils:** add `ObservableStore.dispatch` overload ([c10bae8](https://github.com/anotherbush/utils/commit/c10bae88dc01ed636f649d601c23e7121dce5bf6))
+
+
+
+
+
 ## [0.0.12](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.11...@anotherbush/utils@0.0.12) (2024-07-21)
 
 
