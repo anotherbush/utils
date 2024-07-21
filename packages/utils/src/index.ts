@@ -7,4 +7,5 @@ export * from './create-tree-select-options';
 export * from './file';
 export * from './validations';
 export * from './local-storage';
+export * from './observable-store';
 export type * from './typings';
