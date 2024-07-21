@@ -1,4 +1,4 @@
-import { UseLocalStorage } from '@anotherbush/react';
+import { UseLocalStorage, useValueRef } from '@anotherbush/react';
 import {
   getLocalStorageItem,
   hasLocalStorageItem,
@@ -7,7 +7,7 @@ import {
   setLocalStorageItem,
   watchLocalStorageItem,
 } from '@anotherbush/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { filter, tap } from 'rxjs';
 import { useHydrated } from './use-hydrated';
 
@@ -28,13 +28,9 @@ export function useLocalStorage<T>(
   key: string,
   fallback?: T
 ): UseNextLocalStorage<T | null> {
-  const fallbackRef = useRef(fallback);
+  const fallbackRef = useValueRef(fallback);
   const hydrated = useHydrated();
   const [data, setData] = useState<T | null>(fallback ?? null);
-
-  useEffect(() => {
-    fallbackRef.current = fallback;
-  }, [fallback]);
 
   useEffect(() => {
     if (!hydrated) return;
