@@ -3,10 +3,11 @@ import {
   hasLocalStorageItem,
   removeLocalStorageItem,
   setLocalStorageItem,
-  watchLocalStorageItem
+  watchLocalStorageItem,
 } from '@anotherbush/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { tap } from 'rxjs';
+import { useValueRef } from './use-value-ref';
 
 export type UseLocalStorage<T> = {
   data: T;
@@ -27,14 +28,10 @@ export function useLocalStorage<T>(
   key: string,
   fallback?: T
 ): UseLocalStorage<T | null> {
-  const fallbackRef = useRef(fallback);
+  const fallbackRef = useValueRef(fallback);
   const [data, setData] = useState<T | null>(() =>
     getLocalStorageItem<T>(key, fallback)
   );
-
-  useEffect(() => {
-    fallbackRef.current = fallback;
-  }, [fallback]);
 
   useEffect(() => {
     if (hasLocalStorageItem(key)) {
