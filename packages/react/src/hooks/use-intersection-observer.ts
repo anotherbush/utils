@@ -1,10 +1,5 @@
 import { isBrowser } from '@anotherbush/utils';
-import {
-  MutableRefObject,
-  RefObject,
-  useEffect,
-  useRef
-} from 'react';
+import { MutableRefObject, RefObject, useEffect, useRef } from 'react';
 import { useValueRef } from './use-value-ref';
 
 interface IntersectionObserverInit {
@@ -41,5 +36,5 @@ export function useIntersectionObserver<
     return () => {
       observerRef.current?.disconnect();
     };
-  }, [ref, options]);
+  }, [ref, options?.root, options?.rootMargin, options?.threshold]);
 }
