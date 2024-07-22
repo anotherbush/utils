@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.26](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.25...@anotherbush/react@0.0.26) (2024-07-22)
+
+
+### Bug Fixes
+
+* **react:** fixed `use-intersection-observer` deps ([93a6385](https://github.com/anotherbush/utils/commit/93a6385ae5655f79316d9b77e4427dc54755a342))
+
+
+
+
+
 ## [0.0.25](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.24...@anotherbush/react@0.0.25) (2024-07-22)
 
 
