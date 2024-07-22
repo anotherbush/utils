@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.27](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.26...@anotherbush/react@0.0.27) (2024-07-22)
+
+
+### Features
+
+* **react:** add `use-compose-refs` ([53a409a](https://github.com/anotherbush/utils/commit/53a409aa0038ff2954f4e33c0d1ea104254c6247))
+* **react:** add `use-resize-observer` ([e4f9792](https://github.com/anotherbush/utils/commit/e4f97928be0de975c17514dde8bac31c7814a148))
+
+
+
+
+
 ## [0.0.26](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.25...@anotherbush/react@0.0.26) (2024-07-22)
 
 
