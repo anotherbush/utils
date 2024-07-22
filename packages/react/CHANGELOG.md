@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.25](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.24...@anotherbush/react@0.0.25) (2024-07-22)
+
+
+### Bug Fixes
+
+* **react:** add omitted export ([9b73ff6](https://github.com/anotherbush/utils/commit/9b73ff6422b8b8908f5cbc026229488f38f2fb33))
+
+
+
+
+
 ## [0.0.24](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.23...@anotherbush/react@0.0.24) (2024-07-22)
 
 
