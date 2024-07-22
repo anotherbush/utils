@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
 
 export function useValueRef<T>(value: T) {
   const valueRef = useRef<T>(value);
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     valueRef.current = value;
   }, [value]);
   return valueRef;

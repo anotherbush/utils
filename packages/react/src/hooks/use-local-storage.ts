@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 import { tap } from 'rxjs';
 import { useValueRef } from './use-value-ref';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
 
 export type UseLocalStorage<T> = {
   data: T;
@@ -33,10 +34,13 @@ export function useLocalStorage<T>(
     getLocalStorageItem<T>(key, fallback)
   );
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (hasLocalStorageItem(key)) {
       setData(getLocalStorageItem<T>(key, fallbackRef.current));
     }
+  }, [key]);
+
+  useEffect(() => {
     const sub = watchLocalStorageItem<T>(key, fallbackRef.current)
       .pipe(tap(setData))
       .subscribe();
