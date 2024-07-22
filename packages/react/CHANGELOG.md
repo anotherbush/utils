@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.24](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.23...@anotherbush/react@0.0.24) (2024-07-22)
+
+
+### Features
+
+* **react:** add `use-intersection-observer` ([3608694](https://github.com/anotherbush/utils/commit/36086941e7847432095e2dee7f6b54bb8072263a))
+* **react:** add utils ([b2578b6](https://github.com/anotherbush/utils/commit/b2578b63a93dbe1d8bdb32d998aeee97e5b8c9ef))
+
+
+
+
+
 ## [0.0.23](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.22...@anotherbush/react@0.0.23) (2024-07-22)
 
 **Note:** Version bump only for package @anotherbush/react
