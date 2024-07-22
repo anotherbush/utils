@@ -6,17 +6,12 @@ import {
   map,
   startWith,
 } from 'rxjs';
+import { isBrowser } from './is-browser';
 
-let _emitter$: Subject<string> | null = null;
-const emitter$ = () => {
-  _emitter$ = _emitter$ || new Subject<string>();
-  return _emitter$;
-};
-
-const getLocalStorageKey = (key: string) => `__${key}__`;
+export const LOCAL_STORAGE_PREFIX = '@anotherbush/utils';
 
 export function localStorage(): Storage | null {
-  return typeof window !== 'undefined' ? window?.localStorage : null;
+  return isBrowser() ? window?.localStorage : null;
 }
 
 export function setLocalStorageItem(key: string, val: any) {
@@ -98,4 +93,16 @@ export function watchLocalStorageItem<T>(
       map(() => getLocalStorageItem<T>(key)),
       distinctUntilChanged()
     );
+}
+
+/** --- private --- */
+
+let _emitter$: Subject<string> | null = null;
+function emitter$() {
+  _emitter$ = _emitter$ || new Subject<string>();
+  return _emitter$;
+}
+
+function getLocalStorageKey(key: string) {
+  return `${LOCAL_STORAGE_PREFIX}:${key}`;
 }
