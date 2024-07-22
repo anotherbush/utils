@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.14](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.13...@anotherbush/utils@0.0.14) (2024-07-22)
+
+
+### Bug Fixes
+
+* **utils:** fixed typo in `ObservableStore` ([c81e4a1](https://github.com/anotherbush/utils/commit/c81e4a13ac0d46d11097ec46651d58a8c5e5496e))
+
+
+
+
+
 ## [0.0.13](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.12...@anotherbush/utils@0.0.13) (2024-07-21)
 
 
