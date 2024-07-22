@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.28](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.27...@anotherbush/next@0.0.28) (2024-07-22)
+
+**Note:** Version bump only for package @anotherbush/next
+
+
+
+
+
 ## [0.0.27](https://github.com/anotherbush/utils/compare/@anotherbush/next@0.0.26...@anotherbush/next@0.0.27) (2024-07-22)
 
 **Note:** Version bump only for package @anotherbush/next

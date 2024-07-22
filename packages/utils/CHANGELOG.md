@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.16](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.15...@anotherbush/utils@0.0.16) (2024-07-22)
+
+
+### Features
+
+* **utils:** add `is-server` ([2b515ba](https://github.com/anotherbush/utils/commit/2b515ba3d8932bb381fa2debb1373f589ae0ba5d))
+
+
+
+
+
 ## [0.0.15](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.14...@anotherbush/utils@0.0.15) (2024-07-22)
 
 **Note:** Version bump only for package @anotherbush/utils
