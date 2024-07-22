@@ -13,3 +13,4 @@ export * from './use-value-ref';
 export * from './use-watch-store';
 export * from './use-intersection-observer';
 export * from './use-compose-refs';
+export * from './resize-observer';
