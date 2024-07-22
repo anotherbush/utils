@@ -36,22 +36,22 @@ export class ObservableStore<T extends ObjectType> {
     key: Key,
     patch: (prev: T[Key]) => T[Key]
   ): void;
-  public dispatch<KeyOrPathAll extends keyof T | ((prev: T) => T)>(
-    key: KeyOrPathAll,
-    patch: KeyOrPathAll extends keyof T ? T[KeyOrPathAll] : never
+  public dispatch<KeyOrPatchAll extends keyof T | ((prev: T) => T)>(
+    key: KeyOrPatchAll,
+    patch: KeyOrPatchAll extends keyof T ? T[KeyOrPatchAll] : never
   ): void;
-  public dispatch<KeyOrPathAll extends keyof T | ((prev: T) => T)>(
-    key: KeyOrPathAll,
-    patch: KeyOrPathAll extends keyof T
-      ? (prev: T[KeyOrPathAll]) => T[KeyOrPathAll]
+  public dispatch<KeyOrPatchAll extends keyof T | ((prev: T) => T)>(
+    key: KeyOrPatchAll,
+    patch: KeyOrPatchAll extends keyof T
+      ? (prev: T[KeyOrPatchAll]) => T[KeyOrPatchAll]
       : never
   ): void;
   public dispatch<
     Key extends keyof T,
-    KeyOrPathAll extends Key | ((prev: T) => T)
+    KeyOrPatchAll extends Key | ((prev: T) => T)
   >(
-    keyOrPatchAll: KeyOrPathAll,
-    patch?: KeyOrPathAll extends Key
+    keyOrPatchAll: KeyOrPatchAll,
+    patch?: KeyOrPatchAll extends Key
       ? T[Key] | ((prev: T[Key]) => T[Key])
       : never
   ): void {
