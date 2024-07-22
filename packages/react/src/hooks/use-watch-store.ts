@@ -1,4 +1,4 @@
-import { ObservableStore } from '@anotherbush/utils';
+import type { ObservableStore } from '@anotherbush/utils';
 import { useEffect, useState } from 'react';
 import { tap } from 'rxjs';
 

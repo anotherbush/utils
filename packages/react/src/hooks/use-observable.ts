@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { BehaviorSubject, Observable, tap, timer } from 'rxjs';
+import { useEffect, useState } from 'react';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ValueOfObservable } from '../typings';
 
 /**
