@@ -1,5 +1,4 @@
-export * from './lru-cache';
-export * from './lfu-cache';
+export * from './cache';
 export * from './stringify-id';
 export * from './to-sorted';
 export * from './object-deep-diff';
