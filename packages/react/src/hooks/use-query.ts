@@ -12,7 +12,7 @@ import {
   timer,
 } from 'rxjs';
 import { HookResponse } from '../typings';
-import { useCache } from './use-cache';
+import { useCache } from './cache';
 
 interface _UseQueryParams<Variables, Response> {
   errorResolver?: <T, Err extends Error = Error>(ex?: Err) => T;

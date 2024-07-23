@@ -12,7 +12,7 @@ import {
   timer,
 } from 'rxjs';
 import { HookResponse } from '../typings';
-import { useCache } from './use-cache';
+import { useCache } from './cache';
 
 export interface ListRq {
   page: number;

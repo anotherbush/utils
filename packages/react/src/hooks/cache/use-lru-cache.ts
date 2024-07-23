@@ -1,7 +1,7 @@
 import { LRUCache } from '@anotherbush/utils';
 import { useEffect, useState } from 'react';
 import { Subject, distinctUntilChanged, filter, map, tap } from 'rxjs';
-import { useValueRef } from './use-value-ref';
+import { useValueRef } from '../use-value-ref';
 
 export function useLRUCache<T>(key: string, initialValue?: T | null) {
   const initialValueRef = useValueRef(initialValue);

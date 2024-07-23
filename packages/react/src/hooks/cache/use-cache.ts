@@ -1,7 +1,7 @@
 import { CacheVariant, LFUCache, LRUCache } from '@anotherbush/utils';
 import { useEffect, useRef, useState } from 'react';
 import { Subject, distinctUntilChanged, filter, map, tap } from 'rxjs';
-import { useValueRef } from './use-value-ref';
+import { useValueRef } from '../use-value-ref';
 
 export function useCache<T>(
   variant: CacheVariant,
