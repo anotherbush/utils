@@ -7,7 +7,7 @@ export function useV2LRUCache<T>(key: string, initialValue?: T | null) {
 
 /** ------------------------------------------------------------ */
 
-let _observableLRUCache: ObservableCache<LRUCache<string, any>> | null = null;
+let _observableLRUCache: ObservableCache<string, any> | null = null;
 function observableLRUCache() {
   _observableLRUCache =
     _observableLRUCache || new ObservableCache(new LRUCache<string, any>(20));

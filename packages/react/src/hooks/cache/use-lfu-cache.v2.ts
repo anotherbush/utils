@@ -7,7 +7,7 @@ export function useV2LFUCache<T>(key: string, initialValue?: T | null) {
 
 /** ------------------------------------------------------------ */
 
-let _observableLFUCache: ObservableCache<LFUCache<string, any>> | null = null;
+let _observableLFUCache: ObservableCache<string, any> | null = null;
 function observableLFUCache() {
   _observableLFUCache =
     _observableLFUCache || new ObservableCache(new LFUCache<string, any>(20));

@@ -18,14 +18,14 @@ export function useV2Cache<T>(
   return useObservableCache(observableCache, key, initialValue);
 }
 
-let _observableLRUCache: ObservableCache<LRUCache<string, any>> | null = null;
+let _observableLRUCache: ObservableCache<string, any> | null = null;
 function observableLRUCache() {
   _observableLRUCache =
     _observableLRUCache || new ObservableCache(new LRUCache<string, any>(20));
   return _observableLRUCache;
 }
 
-let _observableLFUCache: ObservableCache<LFUCache<string, any>> | null = null;
+let _observableLFUCache: ObservableCache<string, any> | null = null;
 function observableLFUCache() {
   _observableLFUCache =
     _observableLFUCache || new ObservableCache(new LFUCache<string, any>(20));
