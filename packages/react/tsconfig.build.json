@@ -4,6 +4,7 @@
     "rootDir": "./src",
     "outDir": "./lib",
     "declaration": true,
+    "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"]
   },
   "exclude": ["**/*.spec.*"],

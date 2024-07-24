@@ -9,11 +9,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "lib": [
-      "es2022"
-    ],
-    "emitDecoratorMetadata": true,
-    "noUnusedParameters": true
+    "lib": ["es2022"]
   },
   "exclude": ["node_modules", "**/node_modules"]
 }

@@ -90,8 +90,10 @@ async function build(packageSymbol, packageInfos) {
 
   if (!(isRoot && !fse.existsSync(indexPath))) {
     const tsconfig = path.resolve(packagePath, 'tsconfig.build.json');
+    const tsconfigJson = require(tsconfig);
+    const JSX = tsconfigJson?.compilerOptions?.jsx ? `--jsx ${tsconfigJson?.compilerOptions?.jsx}` : '';
 
-    execSync(`npx tsc --project ${tsconfig} --outDir ${packageDistPath} --emitDeclarationOnly`);
+    execSync(`npx tsc --project ${tsconfig} --outDir ${packageDistPath} --emitDeclarationOnly ${JSX}`)
 
     await rollupBuild({
       input: indexPath,
