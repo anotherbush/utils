@@ -1,14 +1,15 @@
 import {
   getLocalStorageItem,
   hasLocalStorageItem,
+  isServer,
   removeLocalStorageItem,
   setLocalStorageItem,
   watchLocalStorageItem,
 } from '@anotherbush/utils';
 import { useEffect, useState } from 'react';
 import { tap } from 'rxjs';
-import { useValueRef } from './use-value-ref';
 import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
+import { useValueRef } from './use-value-ref';
 
 export type UseLocalStorage<T> = {
   data: T;
@@ -31,7 +32,9 @@ export function useLocalStorage<T>(
 ): UseLocalStorage<T | null> {
   const fallbackRef = useValueRef(fallback);
   const [data, setData] = useState<T | null>(() =>
-    getLocalStorageItem<T>(key, fallback)
+    isServer()
+      ? fallbackRef.current ?? null
+      : getLocalStorageItem<T>(key, fallback)
   );
 
   useIsomorphicLayoutEffect(() => {

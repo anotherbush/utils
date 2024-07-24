@@ -7,7 +7,7 @@ export * from './use-list-query';
 export * from './use-compress-image-mutation';
 export * from './use-local-storage';
 export * from './use-value-ref';
-export * from './use-watch-store';
+export * from './store';
 export * from './use-intersection-observer';
 export * from './use-compose-refs';
 export * from './resize-observer';
