@@ -1,6 +1,9 @@
+import { ValidKey } from '../typings';
 import { Cache } from './typings';
 
-export class LRUCache<Key = any, Val = any> implements Cache<Key, Val> {
+export class LRUCache<Key extends ValidKey = ValidKey, Val = any>
+  implements Cache<Key, Val>
+{
   private readonly cache = new DoubleLinkedList<Val>();
   private readonly keyToNode = new Map<Key, ListNode<Val>>();
   private _capacity: number;
@@ -31,37 +34,48 @@ export class LRUCache<Key = any, Val = any> implements Cache<Key, Val> {
     if (this.keyToNode.has(key)) {
       this._deleteNodeByKey(key);
       this._addRecentlyUsedNode(key, val);
-      return;
+      return undefined;
     }
 
+    let removedKey: Key | undefined = undefined;
     if (this.cache.size() === this.capacity) {
-      this._removeLeastRecentlyUsedNode();
+      removedKey = this._removeLeastRecentlyUsedNode();
     }
 
     this._addRecentlyUsedNode(key, val);
+
+    return removedKey;
   }
 
-  public delete(key: Key) {
-    if (!this.keyToNode.has(key)) return;
+  public delete(key: Key): Key | undefined {
+    if (!this.keyToNode.has(key)) return undefined;
     this._deleteNodeByKey(key);
+    return key;
   }
 
   /**
    * @description
-   * This method might truncate the lru nodes in the current cache.
+   * This method might truncate the nodes in the current cache.
    */
-  public setCapacity(capacity: number) {
+  public setCapacity(capacity: number): Key[] {
     const nextCapacity = Math.max(0, capacity);
+
+    const truncatedKeys: Key[] = [];
 
     /**
      * If the next capacity is smaller than before,
      * Truncate the LRU nodes until the size == nextCapacity
      */
     while (this.size > nextCapacity) {
-      this._removeLeastRecentlyUsedNode();
+      const truncatedKey = this._removeLeastRecentlyUsedNode();
+      if (truncatedKey !== undefined) {
+        truncatedKeys.push(truncatedKey);
+      }
     }
 
     this._capacity = nextCapacity;
+
+    return truncatedKeys;
   }
 
   /** Private methods */
@@ -88,11 +102,11 @@ export class LRUCache<Key = any, Val = any> implements Cache<Key, Val> {
     }
   }
 
-  private _removeLeastRecentlyUsedNode() {
+  private _removeLeastRecentlyUsedNode(): Key | undefined {
     const lruNode = this.cache.popFront();
-    if (lruNode instanceof ListNode) {
-      this.keyToNode.delete(lruNode.key);
-    }
+    if (lruNode instanceof ListNode === false) return undefined;
+    this.keyToNode.delete(lruNode.key);
+    return lruNode.key;
   }
 }
 

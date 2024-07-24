@@ -1,6 +1,9 @@
+import { ValidKey } from '../typings';
 import { Cache } from './typings';
 
-export class LFUCache<Key = any, Val = any> implements Cache<Key, Val> {
+export class LFUCache<Key extends ValidKey = ValidKey, Val = any>
+  implements Cache<Key, Val>
+{
   private readonly _keyToVal = new Map<Key, Val>();
   private readonly _keyToFreq = new Map<Key, number>();
   private readonly _freqToKeys = new Map<number, LinkedHashSet<Key, Val>>();
@@ -29,20 +32,21 @@ export class LFUCache<Key = any, Val = any> implements Cache<Key, Val> {
     return this._keyToVal.get(key) as Val;
   }
 
-  public set(key: Key, val: Val) {
-    if (this.capacity <= 0) return;
+  public set(key: Key, val: Val): Key | undefined {
+    if (this.capacity <= 0) return undefined;
 
     /** if key existed, then update val */
     if (this._keyToVal.has(key)) {
       this._keyToVal.set(key, val);
       this._increaseFreq(key);
-      return;
+      return undefined;
     }
 
+    let removedKey: Key | undefined = undefined;
     /** if key not existed, then insert a new node */
     /** over capacity */
     if (this.capacity <= this._keyToVal.size) {
-      this._removeMinFreqKey();
+      removedKey = this._removeMinFreqKey();
     }
 
     this._keyToVal.set(key, val);
@@ -51,14 +55,16 @@ export class LFUCache<Key = any, Val = any> implements Cache<Key, Val> {
     keyList.add(new ListNode<Val>(key, val));
     this._freqToKeys.set(1, keyList);
     this._minFreq = 1;
+
+    return removedKey;
   }
 
-  public delete(key: Key) {
-    if (!this._keyToFreq.has(key)) return;
+  public delete(key: Key): Key | undefined {
+    if (!this._keyToFreq.has(key)) return undefined;
 
     const deleteNodeFreq = this._keyToFreq.get(key) as number;
     const deleteNodeKeyList = this._freqToKeys.get(deleteNodeFreq);
-    if (deleteNodeKeyList instanceof LinkedHashSet === false) return;
+    if (deleteNodeKeyList instanceof LinkedHashSet === false) return undefined;
 
     deleteNodeKeyList.remove(deleteNodeKeyList.get(key));
     if (deleteNodeKeyList.isEmpty()) {
@@ -71,16 +77,24 @@ export class LFUCache<Key = any, Val = any> implements Cache<Key, Val> {
 
     this._keyToFreq.delete(key);
     this._keyToVal.delete(key);
+    return key;
   }
 
-  public setCapacity(capacity: number): void {
+  public setCapacity(capacity: number): Key[] {
     const nextCapacity = Math.max(0, capacity);
 
+    const truncatedKeys: Key[] = [];
+
     while (this.size > nextCapacity) {
-      this._removeMinFreqKey();
+      const truncatedKey = this._removeMinFreqKey();
+      if (truncatedKey !== undefined) {
+        truncatedKeys.push(truncatedKey);
+      }
     }
 
     this._capacity = nextCapacity;
+
+    return truncatedKeys;
   }
 
   /** Private methods */
@@ -114,12 +128,12 @@ export class LFUCache<Key = any, Val = any> implements Cache<Key, Val> {
     }
   }
 
-  private _removeMinFreqKey() {
+  private _removeMinFreqKey(): Key | undefined {
     const keyList = this._freqToKeys.get(this._minFreq);
-    if (keyList instanceof LinkedHashSet === false) return;
+    if (keyList instanceof LinkedHashSet === false) return undefined;
 
     const deleteKeyNode = keyList.front();
-    if (deleteKeyNode instanceof ListNode === false) return;
+    if (deleteKeyNode instanceof ListNode === false) return undefined;
 
     keyList.remove(deleteKeyNode);
     /** release sources if current keyList is empty. */
@@ -129,6 +143,8 @@ export class LFUCache<Key = any, Val = any> implements Cache<Key, Val> {
 
     this._keyToVal.delete(deleteKeyNode.key);
     this._keyToFreq.delete(deleteKeyNode.key);
+
+    return deleteKeyNode.key;
   }
 }
 
