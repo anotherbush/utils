@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.32](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.31...@anotherbush/react@0.0.32) (2024-07-24)
+
+
+### Features
+
+* **react:** add `createStore` factory store to create a store provider ([dfc4e7a](https://github.com/anotherbush/utils/commit/dfc4e7a2ffb11439383866899cf85b8ad7319100))
+
+
+
+
+
 ## [0.0.31](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.30...@anotherbush/react@0.0.31) (2024-07-24)
 
 
