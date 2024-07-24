@@ -2,7 +2,7 @@ import { LRUCache, ObservableCache } from '@anotherbush/utils';
 import { useObservableCache } from './use-observable-cache';
 
 export function useV2LRUCache<T>(key: string, initialValue?: T | null) {
-  return useObservableCache(observableLRUCache(), key, initialValue);
+  return useObservableCache<string, T>(observableLRUCache(), key, initialValue);
 }
 
 /** ------------------------------------------------------------ */

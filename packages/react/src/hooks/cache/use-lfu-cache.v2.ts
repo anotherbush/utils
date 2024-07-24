@@ -2,7 +2,7 @@ import { LFUCache, ObservableCache } from '@anotherbush/utils';
 import { useObservableCache } from './use-observable-cache';
 
 export function useV2LFUCache<T>(key: string, initialValue?: T | null) {
-  return useObservableCache(observableLFUCache(), key, initialValue);
+  return useObservableCache<string, T>(observableLFUCache(), key, initialValue);
 }
 
 /** ------------------------------------------------------------ */

@@ -15,7 +15,7 @@ export function useV2Cache<T>(
   const { current: variantRef } = useRef(variant);
   const observableCache =
     variantRef === 'LFU' ? observableLFUCache() : observableLRUCache();
-  return useObservableCache(observableCache, key, initialValue);
+  return useObservableCache<string, T>(observableCache, key, initialValue);
 }
 
 let _observableLRUCache: ObservableCache<string, any> | null = null;
