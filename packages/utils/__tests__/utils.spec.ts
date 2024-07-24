@@ -1,6 +1,6 @@
 import { LFUCache, LRUCache, ObservableCache } from '@anotherbush/utils';
 import { skip, take, tap } from 'rxjs';
-import { ObservableStore } from '../src/observable-store';
+import { ObservableStore } from '../src/store/observable-store';
 
 describe('ObservableStore', () => {
   interface MyClientStoreValue {
@@ -39,7 +39,7 @@ describe('ObservableStore', () => {
       }
     });
 
-  store.dispatch('name', (prevName) => {
+  store.set('name', (prevName) => {
     expect(prevName).toEqual('Tim');
     return 'Amy';
   });
@@ -51,7 +51,7 @@ describe('ObservableStore', () => {
       expect(nextName).toEqual('Bob');
     });
 
-  store.dispatch('name', (prevName) => {
+  store.set('name', (prevName) => {
     expect(prevName).toEqual('Amy');
     return 'Bob';
   });
@@ -63,7 +63,7 @@ describe('ObservableStore', () => {
       expect(nextOptionalField).toEqual({ dynamicallyPatched: ':)' });
     });
 
-  store.dispatch('optionalField', (prevOptionalField) => {
+  store.set('optionalField', (prevOptionalField) => {
     expect(prevOptionalField).toBeUndefined();
     return { dynamicallyPatched: ':)' };
   });
@@ -75,7 +75,7 @@ describe('ObservableStore', () => {
       expect(nextName).toEqual('John');
     });
 
-  store.dispatch((prev) => ({
+  store.set((prev) => ({
     ...prev,
     name: 'John',
   }));
@@ -93,7 +93,7 @@ describe('ObservableStore', () => {
       expect(nextName).toEqual('TimChen');
     });
 
-  store.dispatch('name', 'TimChen');
+  store.set('name', 'TimChen');
 });
 
 describe('ObservableCache', () => {

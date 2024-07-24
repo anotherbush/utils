@@ -6,9 +6,15 @@ import {
   Observable,
   shareReplay,
 } from 'rxjs';
-import { ObjectType } from './typings';
+import { WatchableObject, ObjectType } from '../typings';
+import { Store } from './typings';
 
-export class ObservableStore<T extends ObjectType> {
+/**
+ * @description Extension of an store that can observe its mutation events.
+ */
+export class ObservableStore<T extends ObjectType>
+  implements WatchableObject<Store<T>>
+{
   private readonly _producer$: BehaviorSubject<T>;
   private readonly _consumer$: Observable<T>;
 
@@ -31,63 +37,65 @@ export class ObservableStore<T extends ObjectType> {
       : this._producer$.value?.[key];
   }
 
-  public dispatch(patchAll: (prev: T) => T): void;
-  public dispatch<Key extends keyof T>(
+  public set(dispatchAll: (prev: T) => T): void;
+  public set<Key extends keyof T>(
     key: Key,
-    patch: (prev: T[Key]) => T[Key]
+    dispatch: (prev: T[Key]) => T[Key]
   ): void;
-  public dispatch<KeyOrPatchAll extends keyof T | ((prev: T) => T)>(
-    key: KeyOrPatchAll,
-    patch: KeyOrPatchAll extends keyof T ? T[KeyOrPatchAll] : never
+  public set<KeyOrDisPatchAll extends keyof T | ((prev: T) => T)>(
+    key: KeyOrDisPatchAll,
+    dispatch: KeyOrDisPatchAll extends keyof T ? T[KeyOrDisPatchAll] : never
   ): void;
-  public dispatch<KeyOrPatchAll extends keyof T | ((prev: T) => T)>(
-    key: KeyOrPatchAll,
-    patch: KeyOrPatchAll extends keyof T
-      ? (prev: T[KeyOrPatchAll]) => T[KeyOrPatchAll]
+  public set<KeyOrDisPatchAll extends keyof T | ((prev: T) => T)>(
+    key: KeyOrDisPatchAll,
+    dispatch: KeyOrDisPatchAll extends keyof T
+      ? (prev: T[KeyOrDisPatchAll]) => T[KeyOrDisPatchAll]
       : never
   ): void;
-  public dispatch<
+  public set<
     Key extends keyof T,
-    KeyOrPatchAll extends Key | ((prev: T) => T)
+    KeyOrDisPatchAll extends Key | ((prev: T) => T)
   >(
-    keyOrPatchAll: KeyOrPatchAll,
-    patch?: KeyOrPatchAll extends Key
+    keyOrDisPatchAll: KeyOrDisPatchAll,
+    dispatch?: KeyOrDisPatchAll extends Key
       ? T[Key] | ((prev: T[Key]) => T[Key])
       : never
   ): void {
-    if (typeof keyOrPatchAll === 'string' && typeof patch !== 'function') {
+    if (
+      typeof keyOrDisPatchAll === 'string' &&
+      typeof dispatch !== 'function'
+    ) {
       /** dispatch by key */
-      const key: string = keyOrPatchAll;
+      const key: string = keyOrDisPatchAll;
       const prevStore = this._producer$.value;
-      const nextVal = patch;
+      const nextVal = dispatch;
       const nextStore = {
         ...prevStore,
         [key]: nextVal,
       };
       this._producer$.next(nextStore);
     } else if (
-      typeof keyOrPatchAll === 'string' &&
-      typeof patch === 'function'
+      typeof keyOrDisPatchAll === 'string' &&
+      typeof dispatch === 'function'
     ) {
       /** dispatch by key */
-      const key: string = keyOrPatchAll;
+      const key: string = keyOrDisPatchAll;
       const prevStore = this._producer$.value;
-      const nextVal = patch(prevStore[key]);
+      const nextVal = dispatch(prevStore[key]);
       const nextStore = {
         ...prevStore,
         [key]: nextVal,
       };
       this._producer$.next(nextStore);
-    } else if (typeof keyOrPatchAll === 'function') {
+    } else if (typeof keyOrDisPatchAll === 'function') {
       /** dispatch all by patches */
-      const patchAll: (prev: T) => T = keyOrPatchAll;
+      const patchAll: (prev: T) => T = keyOrDisPatchAll;
       const prevStore = this._producer$.value;
       const nextStore = patchAll(prevStore);
       this._producer$.next(nextStore);
     }
   }
 
-  /** Return a hot observable */
   public watch(): Observable<T>;
   public watch<Key extends keyof T>(key: Key): Observable<T[Key]>;
   public watch<Key extends keyof T | undefined = undefined>(

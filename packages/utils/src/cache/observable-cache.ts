@@ -1,23 +1,57 @@
 import { distinctUntilChanged, filter, map, Observable, Subject } from 'rxjs';
-import { ConstructorOf, ValidKey } from '../typings';
+import { ConstructorOf, ValidKey, WatchableObject } from '../typings';
 import { Cache } from './typings';
 import { isCache } from './is-cache';
 
+/**
+ * @description Extension of an cache that can observe its mutation events.
+ */
 export class ObservableCache<Key extends ValidKey = ValidKey, Val = any>
-  implements Cache<Key, Val>
+  implements WatchableObject<Cache<Key, Val>>
 {
   private readonly _factory: Cache<Key, Val>;
   private readonly _emitter$: Subject<Key>;
-
+  /**
+   * @description Will operate on the passing instance.
+   * ```ts
+   * import { LRUCache } from '@anotherbush/utils';
+   *
+   * let lruCache = new LRUCache(20);
+   *
+   * lruCache = new ObservableCache(lruCache);
+   * ```
+   */
   constructor(instance: Cache<Key, Val>);
-  constructor(factory: ConstructorOf<Cache<Key, Val>>, initialCapacity: number);
+  /**
+   * @description Will create and operate an instance of cache.
+   * ```ts
+   * import { LRUCache } from '@anotherbush/utils';
+   *
+   * const lruCache = new ObservableCache(LRUCache, 20);
+   * ```
+   */
   constructor(
-    factoryOrInstance: Cache<Key, Val> | ConstructorOf<Cache<Key, Val>>,
+    BlueprintOfCache: ConstructorOf<Cache<Key, Val>>,
+    initialCapacity: number
+  );
+  constructor(
+    instanceOrBlueprintOfCache:
+      | Cache<Key, Val>
+      | ConstructorOf<Cache<Key, Val>>,
+    /**
+     * @default 20
+     */
+    initialCapacity?: number
+  );
+  constructor(
+    instanceOrBlueprintOfCache:
+      | Cache<Key, Val>
+      | ConstructorOf<Cache<Key, Val>>,
     initialCapacity?: number
   ) {
-    this._factory = isCache<Key, Val>(factoryOrInstance)
-      ? factoryOrInstance
-      : new factoryOrInstance(initialCapacity ?? 20);
+    this._factory = isCache<Key, Val>(instanceOrBlueprintOfCache)
+      ? instanceOrBlueprintOfCache
+      : new instanceOrBlueprintOfCache(initialCapacity ?? 20);
     this._emitter$ = new Subject<Key>();
   }
 
