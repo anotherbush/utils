@@ -1,6 +1,6 @@
 {
   "name": "@anotherbush/next",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "NextJS utils",
   "keywords": [
     "react",
@@ -32,7 +32,7 @@
     "rxjs": "^7.5.5"
   },
   "dependencies": {
-    "@anotherbush/react": "^0.0.32",
+    "@anotherbush/react": "^0.0.33",
     "@anotherbush/utils": "^0.0.19"
   },
   "devDependencies": {

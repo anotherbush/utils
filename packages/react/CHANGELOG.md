@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.33](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.32...@anotherbush/react@0.0.33) (2024-07-24)
+
+
+### Bug Fixes
+
+* fixed build issues ([513a5cc](https://github.com/anotherbush/utils/commit/513a5cc636f4a9a8e77fb61eddfe21f07b70777a))
+
+
+
+
+
 ## [0.0.32](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.31...@anotherbush/react@0.0.32) (2024-07-24)
 
 
