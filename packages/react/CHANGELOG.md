@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.30](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.29...@anotherbush/react@0.0.30) (2024-07-24)
+
+
+### Bug Fixes
+
+* **react/cache:** add omitted generic template passing ([99da2b0](https://github.com/anotherbush/utils/commit/99da2b068c7429f2393e1f1696517275253abc0c))
+
+
+### Features
+
+* **react:** applied utils updates ([5d2ab92](https://github.com/anotherbush/utils/commit/5d2ab92cf7ea77b8449afec890d4f6e26b6ca739))
+
+
+
+
+
 ## [0.0.29](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.28...@anotherbush/react@0.0.29) (2024-07-23)
 
 **Note:** Version bump only for package @anotherbush/react

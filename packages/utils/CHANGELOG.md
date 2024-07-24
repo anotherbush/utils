@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.18](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.17...@anotherbush/utils@0.0.18) (2024-07-24)
+
+
+### Features
+
+* **utils/cache:** add cache testing ([4c28ef7](https://github.com/anotherbush/utils/commit/4c28ef7b798e63ea3564e12fb7bb2deb23dcd0db))
+
+
+
+
+
 ## [0.0.17](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.16...@anotherbush/utils@0.0.17) (2024-07-23)
 
 **Note:** Version bump only for package @anotherbush/utils
