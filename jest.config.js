@@ -14,6 +14,6 @@ module.exports = {
   transformIgnorePatterns: ['/node_modules/(?!bcp-47)/'],
   modulePathIgnorePatterns: ['/lib/'],
   testPathIgnorePatterns: ['/node_modules/'],
-  collectCoverageFrom: ['packages/*/src/**/*', '!**/index.ts'],
+  collectCoverageFrom: ['packages/*/src/**/*', '!**/index.ts', '!**/*.tsx'],
   coveragePathIgnorePatterns: ['/node_modules/'],
 };

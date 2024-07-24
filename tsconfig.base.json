@@ -11,7 +11,9 @@
     "moduleResolution": "node",
     "lib": [
       "es2022"
-    ]
+    ],
+    "emitDecoratorMetadata": true,
+    "noUnusedParameters": true
   },
   "exclude": ["node_modules", "**/node_modules"]
 }

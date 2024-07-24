@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsxdev",
+    "composite": true
+  },
+  "references": [
+    { "path": "./tsconfig.dev.json" },
+    { "path": "./tsconfig.spec.json" }
+  ]
+}
