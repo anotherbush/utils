@@ -1,20 +1,32 @@
-import { compressImage, CompressImageOptions } from '@anotherbush/utils';
+import {
+  compressImage,
+  CompressImageOptions,
+  CompressImageSrc,
+} from '@anotherbush/utils';
 import { useMutation, UseMutationParams } from './use-mutation';
 
-type CompressImageSrc<T extends File | string> = {
+type UseCompressImageMutationSrc<T extends CompressImageSrc> = {
   src: T;
-  maxMb: number;
+  /**
+   * in bytes (based on blob.size)
+   * 1 KB = 1024 bytes
+   * 1 MB = 1024 * 1024 bytes
+   * ...etc
+   */
+  maxSize: number;
   options?: CompressImageOptions;
 };
 
 export function useCompressImageMutation<
-  T extends File | string,
-  Src extends CompressImageSrc<T> = CompressImageSrc<T>
->(options?: UseMutationParams<Src, T>): ReturnType<typeof useMutation<Src, T>> {
-  return useMutation<Src, T>({
+  AfterCompressSrc extends CompressImageSrc,
+  BeforeCompressSrc extends UseCompressImageMutationSrc<AfterCompressSrc> = UseCompressImageMutationSrc<AfterCompressSrc>
+>(
+  options?: UseMutationParams<BeforeCompressSrc, AfterCompressSrc>
+): ReturnType<typeof useMutation<BeforeCompressSrc, AfterCompressSrc>> {
+  return useMutation<BeforeCompressSrc, AfterCompressSrc>({
     ...options,
-    request: async ({ src, maxMb, options }) =>
-      compressImage(src, maxMb, options).then((compressedSrc) => ({
+    request: async ({ src, maxSize, options }) =>
+      compressImage(src, maxSize, options).then((compressedSrc) => ({
         data: compressedSrc,
       })),
   });
