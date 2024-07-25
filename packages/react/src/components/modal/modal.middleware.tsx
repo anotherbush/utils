@@ -1,7 +1,10 @@
-import { useIsomorphicLayoutEffect, useUnmount } from '@anotherbush/react';
+import {
+  useIsomorphicLayoutEffect,
+  useUnmount,
+  useHydrated,
+} from '../../hooks';
 import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import { fromEvent, merge, Observable, tap } from 'rxjs';
-import { useHydrated } from '../../hooks/use-hydrated';
 import { Overlay } from '../overlay';
 import { ModalAnimation } from './typings';
 

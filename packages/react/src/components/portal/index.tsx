@@ -1,7 +1,7 @@
-import { ElementGetter, getElement } from '@anotherbush/react';
 import { FC, ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useHydrated } from '../../hooks/use-hydrated';
+import { ElementGetter, getElement } from '../../utils';
 
 export interface PortalProps {
   container?: ElementGetter;
