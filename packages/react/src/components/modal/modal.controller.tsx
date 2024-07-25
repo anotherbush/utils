@@ -55,7 +55,10 @@ export class ModalController {
       filter((e) => e.detail.type === 'did-present'),
       take(1)
     );
-    const response$ = new Subject<ModalEventDetail<T>>();
+    const response$ = new BehaviorSubject<ModalEventDetail<T>>({
+      type: 'success',
+      data: undefined,
+    });
 
     const modal = {
       id: modalId,
