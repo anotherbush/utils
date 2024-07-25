@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.37](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.36...@anotherbush/react@0.0.37) (2024-07-25)
+
+
+### Features
+
+* **react:** add `modal` resolve or reject response logic ([c4b31b1](https://github.com/anotherbush/utils/commit/c4b31b10d24a8425ec0986ddb49b837725a3925a))
+
+
+
+
+
 ## [0.0.36](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.35...@anotherbush/react@0.0.36) (2024-07-25)
 
 
