@@ -7,4 +7,5 @@ export * from './validations';
 export * from './browser-based';
 export * from './store';
 export * from './byte';
+export * from './uuid';
 export type * from './typings';
