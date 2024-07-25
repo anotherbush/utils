@@ -1,3 +1,4 @@
+import { Byte } from '../byte';
 import { isBase64 } from '../validations';
 import { base64ToFile } from './files';
 import { isBrowser } from './is-browser';
@@ -6,37 +7,61 @@ export type CompressImageOptions = {
   logging?: boolean;
 };
 
-export function compressImage<Src extends File | string>(
+export type CompressImageSrc = string | File | Blob;
+
+export function compressImage<Src extends CompressImageSrc>(
   src: Src,
-  maxMb: number,
+  /**
+   * @param maxSize in bytes.
+   */
+  maxSize: number,
   options?: CompressImageOptions
 ): Promise<Src>;
-export function compressImage<Src extends File | string = File>(
+export function compressImage<Src extends CompressImageSrc = File>(
   file: Src,
-  maxMb: number,
+  /**
+   * @param maxSize in bytes.
+   */
+  maxSize: number,
   options?: CompressImageOptions
 ): Promise<File>;
-export function compressImage<Src extends File | string = string>(
+export function compressImage<Src extends CompressImageSrc = string>(
   base64: Src,
-  maxMb: number,
+  /**
+   * @param maxSize in bytes.
+   */
+  maxSize: number,
   options?: CompressImageOptions
 ): Promise<string>;
-export function compressImage<Src extends File | string>(
+export function compressImage<Src extends CompressImageSrc = Blob>(
+  blob: Blob,
+  /**
+   * @param maxSize in bytes.
+   */
+  maxSize: number,
+  options?: CompressImageOptions
+): Promise<string>;
+export function compressImage<Src extends CompressImageSrc>(
   src: Src,
-  maxMb: number,
+  /**
+   * @param maxSize in bytes.
+   */
+  maxSize: number,
   options?: CompressImageOptions
 ): Promise<any> {
   if (!isBrowser()) {
-    return Promise.resolve(typeof src === 'string' ? '' : new File([], ''));
+    if (src instanceof File) return Promise.resolve(new File([], ''));
+    if (src instanceof Blob) return Promise.resolve(new Blob());
+    return Promise.resolve('');
   }
-  return typeof src === 'string'
-    ? compressImageFromBase64(src, maxMb, options)
-    : compressImageFromFile(src, maxMb, options);
+  if (src instanceof File) return compressImageFromFile(src, maxSize, options);
+  if (src instanceof Blob) return compressImageFromBlob(src, maxSize, options);
+  return compressImageFromBase64(src, maxSize, options);
 }
 
 function compressImageFromFile(
   src: File,
-  maxMb: number,
+  maxSize: number,
   options?: CompressImageOptions
 ): Promise<File> {
   return new Promise<File>((resolve, reject) => {
@@ -46,7 +71,7 @@ function compressImageFromFile(
       if (typeof base64 !== 'string') {
         return reject(new Error('Invalid File'));
       }
-      compressImageFromBase64(base64, maxMb, options)
+      compressImageFromBase64(base64, maxSize, options)
         .then((compressedBase64) =>
           base64ToFile(compressedBase64, src.name, {
             type: src.type,
@@ -66,7 +91,7 @@ function compressImageFromFile(
 
 function compressImageFromBase64(
   src: string,
-  maxMb: number,
+  maxSize: number,
   options?: CompressImageOptions
 ): Promise<string> {
   if (!isBase64(src)) return Promise.resolve('');
@@ -116,14 +141,14 @@ function compressImageFromBase64(
         });
       };
 
-      compressUntilSizeLessThan(0.7, maxMb * 1024 * 1024).then((blob) => {
+      compressUntilSizeLessThan(0.7, maxSize).then((blob) => {
         if (options?.logging) {
           const resizedFile = new File([blob], 'temp', {
             type: 'image/jpeg',
             lastModified: Date.now(),
           });
           console.log(
-            `Resized image size: ${(resizedFile.size / 1024).toFixed(2)} KB`
+            `Resized image size: ${Byte.toKB(resizedFile.size).toFixed(2)} KB`
           );
         }
 
@@ -143,5 +168,19 @@ function compressImageFromBase64(
     };
     img.setAttribute('crossOrigin', 'anonymous');
     img.src = src;
+  });
+}
+
+function compressImageFromBlob(
+  src: Blob,
+  maxSize: number,
+  options?: CompressImageOptions
+): Promise<Blob> {
+  return new Promise<Blob>((resolve, reject) => {
+    const file = new File([src], 'temp', { type: 'image/jpeg' });
+    compressImageFromFile(file, maxSize, options)
+      .then((file) => new Blob([file], { type: 'image/jpeg' }))
+      .then(resolve)
+      .catch(reject);
   });
 }

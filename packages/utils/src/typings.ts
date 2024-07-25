@@ -16,3 +16,5 @@ export interface WatchableObject<T extends ObjectType> {
   watch<Key extends keyof T>(key: Key): Observable<T[Key]>;
   watch<Key extends keyof T>(key?: Key): Observable<T[Key] | undefined>;
 }
+
+export type RoundFn = (num: number) => number;

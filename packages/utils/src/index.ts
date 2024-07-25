@@ -6,4 +6,5 @@ export * from './create-tree-select-options';
 export * from './validations';
 export * from './browser-based';
 export * from './store';
+export * from './byte';
 export type * from './typings';
