@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.38](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.37...@anotherbush/react@0.0.38) (2024-07-25)
+
+
+### Bug Fixes
+
+* **react:** fixed `\modal` empty response issues ([59a1a32](https://github.com/anotherbush/utils/commit/59a1a32bb095780286816bdff81e8bb04674e89a))
+
+
+
+
+
 ## [0.0.37](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.36...@anotherbush/react@0.0.37) (2024-07-25)
 
 
