@@ -13,6 +13,8 @@ type ModalControllerMiddlewareVoidFunction = () => void;
 export const ModalControllerMiddleware: FC<{
   id: string;
   className?: string;
+  disableBackdropDismiss?: boolean;
+  canDismiss?: boolean;
   onInit: ModalControllerMiddlewareVoidFunction;
   onViewInit: ModalControllerMiddlewareVoidFunction;
   onWillPresent: ModalControllerMiddlewareVoidFunction;
@@ -27,6 +29,8 @@ export const ModalControllerMiddleware: FC<{
   id,
   children,
   className,
+  disableBackdropDismiss = false,
+  canDismiss = true,
   onInit,
   onViewInit,
   onDestroy,
@@ -53,7 +57,8 @@ export const ModalControllerMiddleware: FC<{
   }, []);
 
   useEffect(() => {
-    if (!hydrated || startDismiss) return;
+    if (!hydrated || startDismiss || disableBackdropDismiss || !canDismiss)
+      return;
 
     const clickAway$ = merge(
       fromEvent(document, 'mousedown'),
@@ -67,9 +72,11 @@ export const ModalControllerMiddleware: FC<{
 
     const sub = clickAway$.subscribe();
     return () => sub.unsubscribe();
-  }, [hydrated, startDismiss]);
+  }, [hydrated, startDismiss, disableBackdropDismiss, canDismiss]);
 
   useEffect(() => {
+    if (!canDismiss) return;
+
     const startDismissSub = onNotifiedToDismiss$
       .pipe(
         tap(() => {
@@ -78,7 +85,7 @@ export const ModalControllerMiddleware: FC<{
       )
       .subscribe();
     return () => startDismissSub.unsubscribe();
-  }, []);
+  }, [canDismiss]);
 
   useUnmount(() => {
     onDestroy();

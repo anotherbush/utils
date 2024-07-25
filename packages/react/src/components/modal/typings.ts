@@ -1,5 +1,4 @@
 import { CSSProperties, ReactNode } from 'react';
-import { Observable } from 'rxjs';
 
 type ModalEventType =
   | 'create'
@@ -10,17 +9,22 @@ type ModalEventType =
   | 'will-dismiss'
   | 'did-dismiss'
   | 'destroy'
-  | 'server-side-reject';
+  | 'server-side-reject'
+  | 'success'
+  | 'error';
 
 export interface ModalEventDetail<T = unknown> {
   type: ModalEventType;
-  target: HTMLDivElement | null;
+  target?: HTMLDivElement | null;
   data?: T;
+  error?: Error;
 }
 
 export type ModalEvent<T> = CustomEvent<ModalEventDetail<T>>;
 
 export interface ModalConfig<T = unknown> {
+  disableBackdropDismiss?: boolean;
+  canDismiss?: boolean;
   onInit?(event: ModalEvent<T>): void;
   onViewInit?(event: ModalEvent<T>): void;
   onWillPresent?(event: ModalEvent<T>): void;
@@ -41,11 +45,14 @@ export interface ModalConfig<T = unknown> {
 
 export interface Modal<T = unknown> {
   id: string;
-  config?: ModalConfig;
-  present(
-    children: (self: this) => ReactNode
-  ): Observable<ModalEvent<T> | null>;
-  dismiss(): Promise<ModalEvent<T> | null>;
+  config?: ModalConfig<T>;
+  present(children: (self: this) => ReactNode): Promise<ModalEventDetail<T>>;
+  dismiss(
+    options?: Pick<ModalConfig<T>, 'onWillDismiss' | 'onDidDismiss'> & {
+      data?: T;
+      error?: Error;
+    }
+  ): Promise<void>;
 }
 
 export interface ModalAnimation {

@@ -12,7 +12,6 @@ import {
   finalize,
   lastValueFrom,
   map,
-  of,
   Subject,
   switchMap,
   take,
@@ -52,7 +51,11 @@ export class ModalController {
       filter((e) => e.detail.type === 'destroy'),
       take(1)
     );
-    const didPresent$ = new BehaviorSubject(false);
+    const didPresent$ = event$.asObservable().pipe(
+      filter((e) => e.detail.type === 'did-present'),
+      take(1)
+    );
+    const response$ = new Subject<ModalEventDetail<T>>();
 
     const modal = {
       id: modalId,
@@ -64,6 +67,8 @@ export class ModalController {
         modalRoot.render(
           <ModalControllerMiddleware
             id={modalId}
+            canDismiss={config?.canDismiss}
+            disableBackdropDismiss={config?.disableBackdropDismiss}
             animation={{
               animationDuration: '0.3s',
               dismissAnimationTimingFunction: 'ease-out',
@@ -103,7 +108,6 @@ export class ModalController {
                 type: 'did-present',
                 target: modalElement,
               });
-              didPresent$.next(true);
               event$.next(didPresentEvent);
               config?.onDidPresent?.(didPresentEvent);
             }}
@@ -140,31 +144,54 @@ export class ModalController {
                 map(() => undefined)
               )}
           >
-            {typeof children === 'function' ? children(modal) : children}
+            {children(modal)}
           </ModalControllerMiddleware>
         );
 
-        return event$.asObservable().pipe(takeUntil(destroy$));
+        return lastValueFrom(response$.pipe(takeUntil(destroy$)));
       },
-      dismiss: () => {
+      dismiss: (
+        options?: Pick<ModalConfig<T>, 'onWillDismiss' | 'onDidDismiss'> & {
+          data?: T;
+          error?: Error;
+        }
+      ) => {
+        // console.log('dismiss click');
         /** You can dismiss a modal only if it has did present */
         return lastValueFrom(
-          didPresent$.asObservable().pipe(
-            filter((didPresent) => didPresent),
-            take(1),
+          didPresent$.pipe(
             switchMap(() => {
-              /** Make true dismiss can emit after the event listener created. */
-              queueMicrotask(() =>
-                ModalController.onNotifiedToDismiss$.next(modalId)
-              );
+              /** Make true emit after the event listener created. */
+              queueMicrotask(() => {
+                /** update the data */
+                response$.next(
+                  options?.error
+                    ? {
+                        type: 'error',
+                        error: options?.error,
+                      }
+                    : {
+                        type: 'success',
+                        data: options?.data,
+                      }
+                );
+                ModalController.onNotifiedToDismiss$.next(modalId);
+              });
               return event$.asObservable();
             }),
-            filter(
-              (e) =>
+            filter<ModalEvent<T>>((e) => {
+              if (e.detail.type === 'will-dismiss') {
+                options?.onWillDismiss?.(e);
+              } else if (e.detail.type === 'did-dismiss') {
+                options?.onDidDismiss?.(e);
+              }
+              return (
                 e.detail.type === 'will-dismiss' ||
                 e.detail.type === 'did-dismiss' ||
                 e.detail.type === 'destroy'
-            ),
+              );
+            }),
+            map(() => undefined),
             takeUntil(destroy$),
             finalize(() => {
               this.modalIdToRoot.delete(modalId);
@@ -203,8 +230,12 @@ export class ModalController {
     return {
       id: uuid(),
       config,
-      present: () => of(null),
-      dismiss: () => Promise.resolve(null),
+      dismiss: () => Promise.resolve(undefined),
+      present: () =>
+        Promise.resolve({
+          type: 'error',
+          target: null,
+        }),
     };
   }
 }
