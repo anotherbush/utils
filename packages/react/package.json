@@ -1,6 +1,6 @@
 {
   "name": "@anotherbush/react",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "React utils",
   "keywords": [
     "react",
@@ -30,7 +30,7 @@
     "rxjs": "^7.5.5"
   },
   "dependencies": {
-    "@anotherbush/utils": "^0.0.19"
+    "@anotherbush/utils": "^0.0.20"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.6",

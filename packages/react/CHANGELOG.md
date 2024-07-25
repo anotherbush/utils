@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.34](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.33...@anotherbush/react@0.0.34) (2024-07-25)
+
+
+### Features
+
+* **react:** sync with `@anotherbush/utils` ([753310e](https://github.com/anotherbush/utils/commit/753310ecbc82c8d4b2354794561d70c8e101236d))
+
+
+
+
+
 ## [0.0.33](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.32...@anotherbush/react@0.0.33) (2024-07-24)
 
 
