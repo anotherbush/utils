@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.39](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.38...@anotherbush/react@0.0.39) (2024-07-26)
+
+
+### Bug Fixes
+
+* **react:** fixed `scrollLock` issues on modal ([f274c9d](https://github.com/anotherbush/utils/commit/f274c9ddde8bd147bfa00d6ddb8804f6d92b64f5))
+
+
+
+
+
 ## [0.0.38](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.37...@anotherbush/react@0.0.38) (2024-07-25)
 
 
