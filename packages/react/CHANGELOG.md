@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.42](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.41...@anotherbush/react@0.0.42) (2024-07-26)
+
+
+### Bug Fixes
+
+* **react:** fixed dependencies and remove export from `modal.middleware.tsx` ([381596c](https://github.com/anotherbush/utils/commit/381596c1242faa6248c8b8e55cd016b3af082245))
+
+
+
+
+
 ## [0.0.41](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.40...@anotherbush/react@0.0.41) (2024-07-26)
 
 
