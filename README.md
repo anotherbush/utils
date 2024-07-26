@@ -8,7 +8,7 @@
 
 Dynamically render custom component by calling present function.
 
-And handling the modal lifecycle and allow to use the result of the response.
+Handling the modal lifecycle and allow to use the custom result of the response.
 
 ```tsx
 import { ModalController } from '@anotherbush/react';
@@ -72,12 +72,12 @@ function MyComponent() {
             })
             .then((res) => {
               // Consent got granted.
-              console.log(res);
+              console.log(res?.data); // { consent: true }
               return true;
             })
             .catch((ex) => {
               // Consent got rejected.
-              console.log(ex);
+              console.log(ex?.data); // { consent: false }
               return false;
             });
 

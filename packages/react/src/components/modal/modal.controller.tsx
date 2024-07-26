@@ -207,10 +207,12 @@ export class ModalController {
       )
     ).then((res) => {
       if (res.type === 'error') {
-        const exception =
-          res?.error instanceof Error
-            ? res?.error
-            : new Error(JSON.stringify(res?.error || {}));
+        const exception = new Error(res?.error?.message || 'Modal error');
+        Object.assign(exception, {
+          type: 'error',
+          data: res?.data,
+          error: res?.error,
+        });
         throw exception;
       }
       return res;
