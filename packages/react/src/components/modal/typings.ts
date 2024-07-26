@@ -1,7 +1,9 @@
 import { CSSProperties, ReactNode } from 'react';
+import { OverlayStyle } from '../overlay';
 
 type ModalEventType =
-  | 'create'
+  | 'undefined'
+  | 'ssr-ignored'
   | 'init'
   | 'view-init'
   | 'will-present'
@@ -11,7 +13,8 @@ type ModalEventType =
   | 'destroy'
   | 'server-side-reject'
   | 'success'
-  | 'error';
+  | 'error'
+  | 'abort';
 
 export interface ModalEventDetail<T = unknown> {
   type: ModalEventType;
@@ -23,8 +26,26 @@ export interface ModalEventDetail<T = unknown> {
 export type ModalEvent<T> = CustomEvent<ModalEventDetail<T>>;
 
 export interface ModalConfig<T = unknown> {
-  disableBackdropDismiss?: boolean;
+  animation?: ModalAnimation;
   canDismiss?: boolean;
+  className?: string;
+  style?: Omit<
+    CSSProperties,
+    | 'animationFillMode'
+    | 'animationDuration'
+    | 'animationTimingFunction'
+    | 'animationName'
+  >;
+  backdropClassName?: string;
+  backdropStyle?: Omit<
+    OverlayStyle,
+    | 'animationFillMode'
+    | 'animationDuration'
+    | 'animationTimingFunction'
+    | 'animationName'
+  >;
+  disableBackdropDismiss?: boolean;
+  render: (modal: Modal<T>) => ReactNode;
   onInit?(event: ModalEvent<T>): void;
   onViewInit?(event: ModalEvent<T>): void;
   onWillPresent?(event: ModalEvent<T>): void;
@@ -32,35 +53,25 @@ export interface ModalConfig<T = unknown> {
   onWillDismiss?(event: ModalEvent<T>): void;
   onDidDismiss?(event: ModalEvent<T>): void;
   onDestroy?(event: ModalEvent<T>): void;
-  animation?: Partial<
-    Omit<
-      ModalAnimation,
-      | 'overlayPresentAnimationName'
-      | 'overlayDismissAnimationName'
-      | 'modalPresentAnimationName'
-      | 'modalDismissAnimationName'
-    >
-  >;
 }
+
+export type ModalDismissFn<T> = (
+  isSuccess: boolean,
+  options?: Pick<ModalConfig<T>, 'onWillDismiss' | 'onDidDismiss'> & {
+    data?: T;
+    error?: Error;
+  }
+) => Promise<void>;
 
 export interface Modal<T = unknown> {
   id: string;
   config?: ModalConfig<T>;
-  present(children: (self: this) => ReactNode): Promise<ModalEventDetail<T>>;
-  dismiss(
-    options?: Pick<ModalConfig<T>, 'onWillDismiss' | 'onDidDismiss'> & {
-      data?: T;
-      error?: Error;
-    }
-  ): Promise<void>;
+  dismiss: ModalDismissFn<T>;
 }
 
 export interface ModalAnimation {
-  overlayPresentAnimationName: string;
-  overlayDismissAnimationName: string;
-  modalPresentAnimationName: string;
-  modalDismissAnimationName: string;
-  animationDuration: CSSProperties['animationDuration'];
+  presentAnimationDuration: CSSProperties['animationDuration'];
+  dismissAnimationDuration: CSSProperties['animationDuration'];
   presentAnimationTimingFunction: CSSProperties['animationTimingFunction'];
   dismissAnimationTimingFunction: CSSProperties['animationTimingFunction'];
 }

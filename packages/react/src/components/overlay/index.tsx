@@ -1,9 +1,21 @@
 import { CSSProperties, FC } from 'react';
 import { Portal, PortalProps } from '../portal';
 
+export type OverlayStyle = Omit<
+  CSSProperties,
+  | 'position'
+  | 'top'
+  | 'left'
+  | 'right'
+  | 'bottom'
+  | 'display'
+  | 'justifyContent'
+  | 'alignItems'
+>;
+
 export interface OverlayProps extends PortalProps {
   className?: string;
-  style?: CSSProperties;
+  style?: OverlayStyle;
 }
 
 export const Overlay: FC<OverlayProps> = ({

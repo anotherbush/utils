@@ -4,10 +4,10 @@ import {
   lockBodyScroll,
   uuid,
 } from '@anotherbush/utils';
-import { ReactNode } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import {
   BehaviorSubject,
+  defaultIfEmpty,
   filter,
   finalize,
   lastValueFrom,
@@ -21,8 +21,6 @@ import { ModalControllerMiddleware } from './modal.middleware';
 import { Modal, ModalConfig, ModalEvent, ModalEventDetail } from './typings';
 
 export class ModalController {
-  static readonly onNotifiedToDismiss$ = new Subject<string>();
-
   private readonly modalIdToRoot = new Map<string, Root>();
 
   constructor() {
@@ -33,18 +31,22 @@ export class ModalController {
    * Customized your modal config here.
    * transition or overlaying props ?
    */
-  public create<T>(config?: ModalConfig<T>): Modal<T> {
+  public present<T>(config: ModalConfig<T>): Promise<ModalEventDetail<T>> {
     /** Client side only */
-    if (!isBrowser()) return this._empty();
+    if (!isBrowser())
+      return Promise.resolve({
+        type: 'ssr-ignored',
+      });
 
+    lockBodyScroll();
     const modalId = uuid();
     const modalElement = document.createElement('div');
     const modalRoot = createRoot(modalElement);
+    this.modalIdToRoot.set(modalId, modalRoot);
 
     const event$ = new BehaviorSubject<ModalEvent<T>>(
       this._event({
-        type: 'create',
-        target: modalElement,
+        type: 'undefined',
       })
     );
     const destroy$ = event$.asObservable().pipe(
@@ -56,120 +58,15 @@ export class ModalController {
       take(1)
     );
     const response$ = new BehaviorSubject<ModalEventDetail<T>>({
-      type: 'success',
-      data: undefined,
+      type: 'abort',
     });
 
-    const modal = {
+    const onNotifiedToDismiss$ = new Subject<void>();
+
+    const modal: Modal<T> = {
       id: modalId,
       config,
-      present: (children: (self: Modal<T>) => ReactNode) => {
-        lockBodyScroll();
-        this.modalIdToRoot.set(modalId, modalRoot);
-
-        modalRoot.render(
-          <ModalControllerMiddleware
-            id={modalId}
-            canDismiss={config?.canDismiss}
-            disableBackdropDismiss={config?.disableBackdropDismiss}
-            animation={{
-              animationDuration: '0.3s',
-              dismissAnimationTimingFunction: 'ease-out',
-              presentAnimationTimingFunction: 'ease-in-out',
-              ...config?.animation,
-              overlayPresentAnimationName: 'modal-overlay-fade-in',
-              overlayDismissAnimationName: 'modal-overlay-fade-out',
-              modalPresentAnimationName: 'modal-fade-in',
-              modalDismissAnimationName: 'modal-fade-out',
-            }}
-            onInit={() => {
-              const initEvent = this._event<T>({
-                type: 'init',
-                target: modalElement,
-              });
-              event$.next(initEvent);
-              config?.onInit?.(initEvent);
-            }}
-            onViewInit={() => {
-              const viewInit = this._event<T>({
-                type: 'view-init',
-                target: modalElement,
-              });
-              event$.next(viewInit);
-              config?.onViewInit?.(viewInit);
-            }}
-            onWillPresent={() => {
-              const willPresentEvent = this._event<T>({
-                type: 'will-present',
-                target: modalElement,
-              });
-              event$.next(willPresentEvent);
-              config?.onViewInit?.(willPresentEvent);
-            }}
-            onDidPresent={() => {
-              const didPresentEvent = this._event<T>({
-                type: 'did-present',
-                target: modalElement,
-              });
-              event$.next(didPresentEvent);
-              config?.onDidPresent?.(didPresentEvent);
-            }}
-            onWillDismiss={() => {
-              const willDismissEvent = this._event<T>({
-                type: 'will-dismiss',
-                target: modalElement,
-              });
-              event$.next(willDismissEvent);
-              config?.onWillDismiss?.(willDismissEvent);
-            }}
-            onDidDismiss={() => {
-              const didDismissEvent = this._event<T>({
-                type: 'did-dismiss',
-                target: modalElement,
-              });
-              event$.next(didDismissEvent);
-              config?.onDidDismiss?.(didDismissEvent);
-              modalRoot.unmount();
-            }}
-            onDestroy={() => {
-              const destroyEvent = this._event<T>({
-                type: 'destroy',
-                target: modalElement,
-              });
-              event$.next(destroyEvent);
-              config?.onDestroy?.(destroyEvent);
-            }}
-            onNotifiedToDismiss$={ModalController.onNotifiedToDismiss$
-              .asObservable()
-              .pipe(
-                filter((id) => id === modalId),
-                take(1),
-                map(() => undefined)
-              )}
-          >
-            {children(modal)}
-          </ModalControllerMiddleware>
-        );
-
-        return lastValueFrom(
-          response$.pipe(
-            takeUntil(destroy$),
-            finalize(() => {
-              this.modalIdToRoot.delete(modalId);
-              if (this.modalIdToRoot.size === 0) {
-                /** release the body scroll lock */
-                allowBodyScroll();
-              }
-            })
-          )
-        );
-      },
-      dismiss: (
-        options?: Pick<ModalConfig<T>, 'onWillDismiss' | 'onDidDismiss'> & {
-          data?: T;
-          error?: Error;
-        }
-      ) => {
+      dismiss: (isSuccess, dismissOptions) => {
         /** You can dismiss a modal only if it has did present */
         return lastValueFrom(
           didPresent$.pipe(
@@ -178,25 +75,27 @@ export class ModalController {
               queueMicrotask(() => {
                 /** update the data */
                 response$.next(
-                  options?.error
+                  isSuccess
                     ? {
-                        type: 'error',
-                        error: options?.error,
+                        type: 'success',
+                        data: dismissOptions?.data,
+                        error: dismissOptions?.error,
                       }
                     : {
-                        type: 'success',
-                        data: options?.data,
+                        type: 'error',
+                        data: dismissOptions?.data,
+                        error: dismissOptions?.error,
                       }
                 );
-                ModalController.onNotifiedToDismiss$.next(modalId);
+                onNotifiedToDismiss$.next();
               });
               return event$.asObservable();
             }),
             filter<ModalEvent<T>>((e) => {
               if (e.detail.type === 'will-dismiss') {
-                options?.onWillDismiss?.(e);
+                dismissOptions?.onWillDismiss?.(e);
               } else if (e.detail.type === 'did-dismiss') {
-                options?.onDidDismiss?.(e);
+                dismissOptions?.onDidDismiss?.(e);
               }
               return (
                 e.detail.type === 'will-dismiss' ||
@@ -205,13 +104,117 @@ export class ModalController {
               );
             }),
             map(() => undefined),
-            takeUntil(destroy$)
+            takeUntil(destroy$),
+            defaultIfEmpty(undefined)
           )
         );
       },
     };
 
-    return modal;
+    modalRoot.render(
+      <ModalControllerMiddleware
+        id={modalId}
+        canDismiss={config?.canDismiss}
+        disableBackdropDismiss={config?.disableBackdropDismiss}
+        className={config?.className}
+        style={config?.style}
+        backdropClassName={config?.backdropClassName}
+        backdropStyle={config?.backdropStyle}
+        animation={{
+          presentAnimationDuration: '0.3s',
+          dismissAnimationDuration: '0.3s',
+          dismissAnimationTimingFunction: 'ease-out',
+          presentAnimationTimingFunction: 'ease-in-out',
+          ...config?.animation,
+          overlayPresentAnimationName: 'modal-overlay-fade-in',
+          overlayDismissAnimationName: 'modal-overlay-fade-out',
+          modalPresentAnimationName: 'modal-fade-in',
+          modalDismissAnimationName: 'modal-fade-out',
+        }}
+        onInit={() => {
+          const initEvent = this._event<T>({
+            type: 'init',
+            target: modalElement,
+          });
+          event$.next(initEvent);
+          config?.onInit?.(initEvent);
+        }}
+        onViewInit={() => {
+          const viewInit = this._event<T>({
+            type: 'view-init',
+            target: modalElement,
+          });
+          event$.next(viewInit);
+          config?.onViewInit?.(viewInit);
+        }}
+        onWillPresent={() => {
+          const willPresentEvent = this._event<T>({
+            type: 'will-present',
+            target: modalElement,
+          });
+          event$.next(willPresentEvent);
+          config?.onViewInit?.(willPresentEvent);
+        }}
+        onDidPresent={() => {
+          const didPresentEvent = this._event<T>({
+            type: 'did-present',
+            target: modalElement,
+          });
+          event$.next(didPresentEvent);
+          config?.onDidPresent?.(didPresentEvent);
+        }}
+        onWillDismiss={() => {
+          const willDismissEvent = this._event<T>({
+            type: 'will-dismiss',
+            target: modalElement,
+          });
+          event$.next(willDismissEvent);
+          config?.onWillDismiss?.(willDismissEvent);
+        }}
+        onDidDismiss={() => {
+          const didDismissEvent = this._event<T>({
+            type: 'did-dismiss',
+            target: modalElement,
+          });
+          event$.next(didDismissEvent);
+          config?.onDidDismiss?.(didDismissEvent);
+          modalRoot.unmount();
+        }}
+        onDestroy={() => {
+          const destroyEvent = this._event<T>({
+            type: 'destroy',
+            target: modalElement,
+          });
+          event$.next(destroyEvent);
+          config?.onDestroy?.(destroyEvent);
+        }}
+        onNotifiedToDismiss$={onNotifiedToDismiss$.asObservable().pipe(take(1))}
+      >
+        {config.render(modal)}
+      </ModalControllerMiddleware>
+    );
+
+    return lastValueFrom(
+      response$.pipe(
+        takeUntil(destroy$),
+        finalize(() => {
+          this.modalIdToRoot.delete(modalId);
+          if (this.modalIdToRoot.size === 0) {
+            /** release the body scroll lock */
+            allowBodyScroll();
+          }
+        })
+      )
+    ).then((res) => {
+      if (res.type === 'error') {
+        const exception =
+          res?.error instanceof Error
+            ? res?.error
+            : new Error(JSON.stringify(res?.error || {}));
+        throw exception;
+      }
+      return res;
+    });
   }
 
   private _style() {
@@ -230,19 +233,6 @@ export class ModalController {
       composed: false,
       detail: event,
     });
-  }
-
-  private _empty<T>(config?: ModalConfig<T>): Modal<T> {
-    return {
-      id: uuid(),
-      config,
-      dismiss: () => Promise.resolve(undefined),
-      present: () =>
-        Promise.resolve({
-          type: 'error',
-          target: null,
-        }),
-    };
   }
 }
 

@@ -1,20 +1,51 @@
 import {
+  CSSProperties,
+  FC,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { fromEvent, merge, mergeMap, Observable, tap, timer } from 'rxjs';
+import {
+  useHydrated,
   useIsomorphicLayoutEffect,
   useUnmount,
-  useHydrated,
 } from '../../hooks';
-import { FC, ReactNode, useEffect, useRef, useState } from 'react';
-import { fromEvent, merge, Observable, tap } from 'rxjs';
-import { Overlay } from '../overlay';
+import { Overlay, OverlayStyle } from '../overlay';
 import { ModalAnimation } from './typings';
 
 type ModalControllerMiddlewareVoidFunction = () => void;
 
+interface ModalControllerMiddlewareModalAnimation extends ModalAnimation {
+  overlayPresentAnimationName: string;
+  overlayDismissAnimationName: string;
+  modalPresentAnimationName: string;
+  modalDismissAnimationName: string;
+}
+
 export const ModalControllerMiddleware: FC<{
   id: string;
+  animation: ModalControllerMiddlewareModalAnimation;
   className?: string;
-  disableBackdropDismiss?: boolean;
+  style?: Omit<
+    CSSProperties,
+    | 'animationFillMode'
+    | 'animationDuration'
+    | 'animationTimingFunction'
+    | 'animationName'
+  >;
   canDismiss?: boolean;
+  backdropClassName?: string;
+  backdropStyle?: Omit<
+    OverlayStyle,
+    | 'animationFillMode'
+    | 'animationDuration'
+    | 'animationTimingFunction'
+    | 'animationName'
+  >;
+  disableBackdropDismiss?: boolean;
+  onNotifiedToDismiss$: Observable<void>;
   onInit: ModalControllerMiddlewareVoidFunction;
   onViewInit: ModalControllerMiddlewareVoidFunction;
   onWillPresent: ModalControllerMiddlewareVoidFunction;
@@ -22,15 +53,17 @@ export const ModalControllerMiddleware: FC<{
   onWillDismiss: ModalControllerMiddlewareVoidFunction;
   onDidDismiss: ModalControllerMiddlewareVoidFunction;
   onDestroy: ModalControllerMiddlewareVoidFunction;
-  onNotifiedToDismiss$: Observable<void>;
-  animation: ModalAnimation;
   children: ReactNode;
 }> = ({
   id,
+  animation,
+  backdropStyle,
+  backdropClassName,
   children,
   className,
   disableBackdropDismiss = false,
   canDismiss = true,
+  style,
   onInit,
   onViewInit,
   onDestroy,
@@ -39,7 +72,6 @@ export const ModalControllerMiddleware: FC<{
   onNotifiedToDismiss$,
   onWillDismiss,
   onWillPresent,
-  animation,
 }) => {
   const idRef = useRef(id);
   const hydrated = useHydrated();
@@ -60,10 +92,13 @@ export const ModalControllerMiddleware: FC<{
     if (!hydrated || startDismiss || disableBackdropDismiss || !canDismiss)
       return;
 
-    const clickAway$ = merge(
-      fromEvent(document, 'mousedown'),
-      fromEvent(document, 'touchstart')
-    ).pipe(
+    const clickAway$ = timer(500).pipe(
+      mergeMap(() =>
+        merge(
+          fromEvent(document, 'mousedown'),
+          fromEvent(document, 'touchstart')
+        )
+      ),
       tap(() => {
         // click away
         setStartDismiss(true);
@@ -93,9 +128,13 @@ export const ModalControllerMiddleware: FC<{
 
   return (
     <Overlay
+      className={backdropClassName}
       style={{
+        ...backdropStyle,
         animationFillMode: 'forwards',
-        animationDuration: animation.animationDuration,
+        animationDuration: startDismiss
+          ? animation.dismissAnimationDuration
+          : animation.presentAnimationDuration,
         animationTimingFunction: startDismiss
           ? animation.dismissAnimationTimingFunction
           : animation.presentAnimationTimingFunction,
@@ -110,8 +149,11 @@ export const ModalControllerMiddleware: FC<{
         className={className}
         style={{
           backgroundColor: 'transparent',
+          ...style,
           animationFillMode: 'forwards',
-          animationDuration: animation.animationDuration,
+          animationDuration: startDismiss
+            ? animation.dismissAnimationDuration
+            : animation.presentAnimationDuration,
           animationTimingFunction: startDismiss
             ? animation.dismissAnimationTimingFunction
             : animation.presentAnimationTimingFunction,
