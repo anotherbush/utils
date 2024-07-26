@@ -27,6 +27,7 @@
   "peerDependencies": {
     "lodash": "^4.17.21",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rxjs": "^7.5.5"
   },
   "dependencies": {
@@ -34,7 +35,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.6",
-    "@types/react": "^18.2.0"
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
   },
   "gitHead": "dcc4390fc3f9d9360d4f346afdd4f6ed3d6526f3"
 }
