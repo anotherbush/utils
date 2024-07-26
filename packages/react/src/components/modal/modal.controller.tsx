@@ -151,7 +151,18 @@ export class ModalController {
           </ModalControllerMiddleware>
         );
 
-        return lastValueFrom(response$.pipe(takeUntil(destroy$)));
+        return lastValueFrom(
+          response$.pipe(
+            takeUntil(destroy$),
+            finalize(() => {
+              this.modalIdToRoot.delete(modalId);
+              if (this.modalIdToRoot.size === 0) {
+                /** release the body scroll lock */
+                allowBodyScroll();
+              }
+            })
+          )
+        );
       },
       dismiss: (
         options?: Pick<ModalConfig<T>, 'onWillDismiss' | 'onDidDismiss'> & {
@@ -159,7 +170,6 @@ export class ModalController {
           error?: Error;
         }
       ) => {
-        // console.log('dismiss click');
         /** You can dismiss a modal only if it has did present */
         return lastValueFrom(
           didPresent$.pipe(
@@ -195,14 +205,7 @@ export class ModalController {
               );
             }),
             map(() => undefined),
-            takeUntil(destroy$),
-            finalize(() => {
-              this.modalIdToRoot.delete(modalId);
-              if (this.modalIdToRoot.size === 0) {
-                /** release the body scroll lock */
-                allowBodyScroll();
-              }
-            })
+            takeUntil(destroy$)
           )
         );
       },
