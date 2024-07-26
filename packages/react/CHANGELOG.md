@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.41](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.40...@anotherbush/react@0.0.41) (2024-07-26)
+
+
+### Features
+
+* **react:** update `modal` error handling ([b50ddf4](https://github.com/anotherbush/utils/commit/b50ddf41538ebf264619514fb0159e0c96eb51df))
+
+
+
+
+
 ## [0.0.40](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.39...@anotherbush/react@0.0.40) (2024-07-26)
 
 
