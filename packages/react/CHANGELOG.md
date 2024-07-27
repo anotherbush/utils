@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.43](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.42...@anotherbush/react@0.0.43) (2024-07-27)
+
+
+### Features
+
+* **react:** export factory function and interface not the class detail ([78557aa](https://github.com/anotherbush/utils/commit/78557aa279514463caac5fe5bebd024c25acd3a8))
+
+
+
+
+
 ## [0.0.42](https://github.com/anotherbush/utils/compare/@anotherbush/react@0.0.41...@anotherbush/react@0.0.42) (2024-07-26)
 
 
