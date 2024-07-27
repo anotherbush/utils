@@ -20,7 +20,19 @@ import {
 import { ModalControllerMiddleware } from './modal.middleware';
 import { Modal, ModalConfig, ModalEvent, ModalEventDetail } from './typings';
 
-export class ModalController {
+export interface ModalController {
+  /**
+   * Customized your modal config here.
+   * transition or backdrop props ?
+   */
+  present<T>(config: ModalConfig<T>): Promise<ModalEventDetail<T>>;
+}
+
+export function createModalController(): ModalController {
+  return new ModalControllerImpl();
+}
+
+class ModalControllerImpl implements ModalController {
   private readonly modalIdToRoot = new Map<string, Root>();
 
   constructor() {
@@ -29,7 +41,7 @@ export class ModalController {
 
   /**
    * Customized your modal config here.
-   * transition or overlaying props ?
+   * transition or backdrop props ?
    */
   public present<T>(config: ModalConfig<T>): Promise<ModalEventDetail<T>> {
     /** Client side only */

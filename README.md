@@ -11,9 +11,9 @@ Dynamically render custom component by calling present function.
 Handling the modal lifecycle and allow to use the custom result of the response.
 
 ```tsx
-import { ModalController } from '@anotherbush/react';
+import { createModalController } from '@anotherbush/react';
 
-const modalCtrl = new ModalController();
+const modalCtrl = createModalController();
 
 function MyComponent() {
   return (
