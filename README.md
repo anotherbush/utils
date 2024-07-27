@@ -6,9 +6,9 @@
 
 1. ModalController
 
-Dynamically render custom component by calling present function.
+- Dynamically render custom component by calling present function.
 
-Handling the modal lifecycle and allow to use the custom result of the response.
+- Handling the modal lifecycle and allow to use the custom result of the response.
 
 ```tsx
 import { createModalController } from '@anotherbush/react';
@@ -95,6 +95,80 @@ function MyComponent() {
     </div>
   );
 }
+```
+
+1. ObservableStore
+
+- High performance flux pattern store.
+
+```tsx
+import { createStore, useWatchStore } from '@anotherbush/react';
+
+interface MyClientStore {
+  name: string;
+  description: string;
+  age: number;
+}
+
+const {
+  Provider: MyClientStoreProvider,
+  useStore: useMyClientStore
+} = createStore<MyClientStore>();
+
+// layout.tsx
+export default function AppLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <MyClientStoreProvider
+          value={{
+            name: 'Tim',
+            description: '',
+            age: 20,
+          }}
+        >
+          {children}
+        </MyClientStoreProvider>
+      </body>
+    </html>
+  );
+}
+
+function AppRootPage() {
+  const store = useMyClientStore();
+  // able to listening the changes.
+  const name = useWatchStore(store, 'name');
+
+  return (
+    <div>
+      <SubComponent />
+      {name} 
+    </div>
+  );
+}
+
+function SubComponent() {
+  const store = useMyClientStore();
+  return (
+    <div>
+    <input type="text" onInput={e => {
+      store.set('name', (prevName) => {
+        console.log(prevName); // Tim
+        return 'Amy';
+      });
+      // or
+      // store.set('name', 'Amy');
+    }} />
+    </div>
+  );
+}
+
+
+
 ```
 
 ### Utils
