@@ -38,6 +38,7 @@ export class ObservableStore<T extends ObjectType>
   }
 
   public set(dispatchAll: (prev: T) => T): void;
+  public set<Key extends keyof T>(key: Key, nextValue: T[Key]): void;
   public set<Key extends keyof T>(
     key: Key,
     dispatch: (prev: T[Key]) => T[Key]
