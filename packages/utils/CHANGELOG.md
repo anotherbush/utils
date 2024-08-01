@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.22](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.21...@anotherbush/utils@0.0.22) (2024-08-01)
+
+
+### Bug Fixes
+
+* **utils:** update `dependencies` ([36823c8](https://github.com/anotherbush/utils/commit/36823c8ef4e597e4e9a3912095ab4a5266543ad2))
+
+
+
+
+
 ## [0.0.21](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.20...@anotherbush/utils@0.0.21) (2024-08-01)
 
 
