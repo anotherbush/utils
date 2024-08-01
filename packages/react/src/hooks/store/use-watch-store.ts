@@ -16,17 +16,16 @@ export function useWatchStore<
   T extends Store['value'],
   Key extends keyof T
 >(store: Store, key?: Key): T | T[Key] {
-  const storeRef = useRef(store);
-  const [data, setData] = useState(() => storeRef.current.get(key));
+  const [data, setData] = useState(() => store.get(key));
 
   useEffect(() => {
     /** initial data */
-    setData(storeRef.current.get(key));
+    setData(store.get(key));
 
     /** watch data */
-    const sub = storeRef.current.watch(key).pipe(tap(setData)).subscribe();
+    const sub = store.watch(key).pipe(tap(setData)).subscribe();
     return () => sub.unsubscribe();
-  }, [key]);
+  }, [store, key]);
 
   return data;
 }
