@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.21](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.20...@anotherbush/utils@0.0.21) (2024-08-01)
+
+
+### Features
+
+* **utils:** add `ObservableStore.set` overload ([e0b1c2d](https://github.com/anotherbush/utils/commit/e0b1c2d5c03db8f3c1dbc90c2eeb47f7751bc598))
+
+
+
+
+
 ## [0.0.20](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.19...@anotherbush/utils@0.0.20) (2024-07-25)
 
 
