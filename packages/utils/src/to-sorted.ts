@@ -1,7 +1,7 @@
 import { ObjectType } from './typings';
 
 export function toSorted<T = any>(val: T): T {
-  if (typeof val !== 'object') {
+  if (typeof val !== 'object' || val === null) {
     return val;
   }
   if (Array.isArray(val)) {
