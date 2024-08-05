@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.23](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.22...@anotherbush/utils@0.0.23) (2024-08-05)
+
+
+### Bug Fixes
+
+* **utils:** fixed `to-sorted` ([b1e28c9](https://github.com/anotherbush/utils/commit/b1e28c9c8966940cb035f8d82600c9fa132ba2ae))
+
+
+
+
+
 ## [0.0.22](https://github.com/anotherbush/utils/compare/@anotherbush/utils@0.0.21...@anotherbush/utils@0.0.22) (2024-08-01)
 
 
