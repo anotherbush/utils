@@ -1,7 +1,7 @@
 import { ObjectType, ObservableStore } from '@anotherbush/utils';
 import React from 'react';
 
-interface AnotherbushStoreProviderProps<T extends ObjectType> {
+export interface AnotherbushStoreProviderProps<T extends ObjectType> {
   value: T;
   children: React.ReactNode;
 }

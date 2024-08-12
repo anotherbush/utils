@@ -15,9 +15,10 @@ import {
 import { Overlay, OverlayStyle } from '../overlay';
 import { ModalAnimation } from './typings';
 
-type ModalControllerMiddlewareVoidFunction = () => void;
+export type ModalControllerMiddlewareVoidFunction = () => void;
 
-interface ModalControllerMiddlewareModalAnimation extends ModalAnimation {
+export interface ModalControllerMiddlewareModalAnimation
+  extends ModalAnimation {
   overlayPresentAnimationName: string;
   overlayDismissAnimationName: string;
   modalPresentAnimationName: string;
